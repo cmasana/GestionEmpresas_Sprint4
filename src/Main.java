@@ -1,4 +1,4 @@
-import Screens.*;
+import frames.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame frame = new MainWindow();
+                JFrame frame = new MainFrame();
                 frame.setSize(1600,950); // Tamaño por defecto
                 frame.setMinimumSize(new Dimension(600, 600)); // Tamaño mínimo
                 frame.setLocationRelativeTo(null);

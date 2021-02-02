@@ -1,13 +1,13 @@
 package modules;
 
-import custom.tables.BasicConfig;
+import custom.tables.CustomTableConfig;
+import custom.tables.CustomTableModel;
 import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
 import mainclasses.io.InputOutput;
 import mainclasses.proposal.Proposal;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -157,7 +157,7 @@ public class CrudProposal {
         }
 
         // Añade los datos al modelo
-        proposalTable.setModel(new DefaultTableModel(
+        proposalTable.setModel(new CustomTableModel(
                 tabla,
                 new String [] {
                         "Título", "Descripción", "Fecha Inicio", "Entidad"
@@ -165,6 +165,6 @@ public class CrudProposal {
         ));
 
         // Diseño de la tabla
-        BasicConfig.initConfig(proposalTable);
+        CustomTableConfig.initConfig(proposalTable);
     }
 }

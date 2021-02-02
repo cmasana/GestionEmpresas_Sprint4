@@ -5,17 +5,19 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 /**
- * Proporciona la configuración estética de las tablas
+ * Tables basic configuration
+ * @author  cmasana
  */
-public class BasicConfig {
-    public BasicConfig(JTable table) {
+public class CustomTableConfig {
+    public CustomTableConfig(JTable table) {
         initConfig(table);
     }
 
     public static void initConfig(JTable table) {
-        // Asignamos un alto fijo para cada fila
+        // Row Height
         table.setRowHeight(30);
-        // Asignamos un ancho fijo a las columnas con menos información
+
+        // Columns Width
         table.getColumnModel().getColumn(0).setMaxWidth(250);
         table.getColumnModel().getColumn(0).setPreferredWidth(250);
         table.getColumnModel().getColumn(2).setMaxWidth(150);
@@ -23,12 +25,13 @@ public class BasicConfig {
 
         table.setIntercellSpacing(new Dimension(1,1));
 
-        // Permite personalizar el encabezado de la tabla
+        // Customize headers from table
         JTableHeader tableHeader = table.getTableHeader();
         tableHeader.setDefaultRenderer(new custom.tables.CustomTableHeaderRender());
         table.setTableHeader(tableHeader);
+        table.getTableHeader().setReorderingAllowed(false);
 
-        // Permite personalizar las celdas de la tabla
+        // Customize cells from table
         table.setDefaultRenderer(Object.class, new custom.tables.CustomTableCellRender());
     }
 }

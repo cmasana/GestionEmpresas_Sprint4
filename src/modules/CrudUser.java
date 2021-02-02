@@ -1,6 +1,7 @@
 package modules;
 
-import custom.tables.BasicConfig;
+import custom.tables.CustomTableConfig;
+import custom.tables.CustomTableModel;
 import mainclasses.database.EmployeeDB;
 import mainclasses.io.InputOutput;
 import mainclasses.user.Employee;
@@ -150,7 +151,7 @@ public class CrudUser {
         }
 
         // Añade los datos al modelo
-        userTable.setModel(new DefaultTableModel(
+        userTable.setModel(new CustomTableModel(
                 tablaUsuarios,
                 new String [] {
                         "Nombre", "DNI", "NSS", "Cod. Empleado"
@@ -158,6 +159,6 @@ public class CrudUser {
         ));
 
         // Diseño básico de la tabla
-        BasicConfig.initConfig(userTable);
+        CustomTableConfig.initConfig(userTable);
     }
 }

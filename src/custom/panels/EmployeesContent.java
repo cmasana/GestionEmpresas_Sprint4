@@ -1,6 +1,6 @@
 package custom.panels;
 
-import custom.tables.BasicConfig;
+import custom.tables.CustomTableConfig;
 import modules.CrudUser;
 
 import javax.swing.*;
@@ -186,7 +186,7 @@ public class EmployeesContent extends ContentWindow {
         ));
 
         // Diseño básico de la tabla
-        BasicConfig.initConfig(userTable);
+        CustomTableConfig.initConfig(userTable);
 
         scrollPane.setViewportView(userTable);
 

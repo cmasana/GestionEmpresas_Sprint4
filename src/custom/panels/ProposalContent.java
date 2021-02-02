@@ -1,6 +1,7 @@
 package custom.panels;
 
-import custom.tables.BasicConfig;
+import custom.tables.CustomTableConfig;
+import custom.tables.CustomTableModel;
 import mainclasses.database.EmployeeDB;
 import mainclasses.database.EntityDB;
 import mainclasses.entity.Entity;
@@ -10,7 +11,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -260,6 +260,8 @@ public class ProposalContent extends ContentWindow {
      * Añade una tabla y su configuración al panel actual
      */
     private void putProposalTable() {
+        String[] titulos = {"Título", "Descripción", "Fecha Inicio", "Entidad"};
+
         JPanel proposalPanelTable = new JPanel(new BorderLayout());
         proposalPanelTable.setBackground(DYE.getCONTENT());
 
@@ -270,17 +272,15 @@ public class ProposalContent extends ContentWindow {
         proposalTable = new JTable();
 
         // Modelo por defecto de la tabla
-        proposalTable.setModel(new DefaultTableModel(
+        proposalTable.setModel(new CustomTableModel(
                 new Object [][] {
 
                 },
-                new String [] {
-                        "Título", "Descripción", "Fecha Inicio", "Entidad"
-                }
+                titulos
         ));
 
         // Diseño básico de la tabla
-        BasicConfig.initConfig(proposalTable);
+        CustomTableConfig.initConfig(proposalTable);
 
         scrollPane.setViewportView(proposalTable);
 
