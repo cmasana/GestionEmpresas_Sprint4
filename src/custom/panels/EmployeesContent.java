@@ -1,5 +1,6 @@
 package custom.panels;
 
+import custom.other.RowForm;
 import custom.tables.CustomTableConfig;
 import modules.CrudUser;
 
@@ -16,18 +17,13 @@ public class EmployeesContent extends ContentWindow {
     private JPanel module;
     private JPanel management;
 
-    // Labels
-    private JLabel lbName;
-    private JLabel lbDni;
-    private JLabel lbNss;
-    private JLabel lbEmployeeId;
+    // Formulario
+    private RowForm rowName;
+    private RowForm rowDni;
+    private RowForm rowNss;
+    private RowForm rowEmployeeId;
 
-    // Textfields (inputs)
-    private JTextField txtName;
-    private JTextField txtDni;
-    private JTextField txtNss;
-    private JTextField txtEmployeeId;
-
+    // Tabla
     private static JTable userTable;
 
     // Constructor
@@ -69,37 +65,20 @@ public class EmployeesContent extends ContentWindow {
     private void putForm() {
         JPanel form = new JPanel();
         form.setBackground(DYE.getCONTENT());
-        form.setLayout(new GridLayout(12, 5, 10,10));
-        form.setBorder(new EmptyBorder(0,50,0,0)); // Top, left, bottom, right
-        form.setPreferredSize(new Dimension(500, 400));
+        form.setLayout(new GridLayout(4, 1));
+        form.setBorder(new EmptyBorder(20,50,20,100)); // Top, left, bottom, right
 
-        lbName = new JLabel("Nombre");
-        form.add(lbName);
-        txtName = new JTextField();
-        txtName.setColumns(5);
-        lbName.setLabelFor(txtName);
-        form.add(txtName);
+        rowName = new RowForm("Nombre");
+        form.add(rowName);
 
-        lbDni = new JLabel("DNI");
-        form.add(lbDni);
-        txtDni = new JTextField();
-        txtDni.setColumns(5);
-        lbDni.setLabelFor(txtDni);
-        form.add(txtDni);
+        rowDni = new RowForm("DNI");
+        form.add(rowDni);
 
-        lbNss = new JLabel("NSS");
-        form.add(lbNss);
-        txtNss = new JTextField();
-        txtNss.setColumns(5);
-        lbNss.setLabelFor(txtNss);
-        form.add(txtNss);
+        rowNss = new RowForm("NSS");
+        form.add(rowNss);
 
-        lbEmployeeId = new JLabel("Cod. Empleado");
-        form.add(lbEmployeeId);
-        txtEmployeeId = new JTextField();
-        txtEmployeeId.setColumns(5);
-        lbEmployeeId.setLabelFor(txtEmployeeId);
-        form.add(txtEmployeeId);
+        rowEmployeeId = new RowForm("Cod. Empleado");
+        form.add(rowEmployeeId);
 
         management.add(form, BorderLayout.CENTER);
     }
@@ -120,7 +99,7 @@ public class EmployeesContent extends ContentWindow {
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudUser.createUser(userTable, txtName.getText(), txtDni.getText(), txtNss.getText(), txtEmployeeId.getText());
+                CrudUser.createUser(userTable, rowName.getTxtInput().getText(), rowDni.getTxtInput().getText(), rowNss.getTxtInput().getText(), rowEmployeeId.getTxtInput().getText());
                 cleanInputs();
             }
         });
@@ -132,7 +111,7 @@ public class EmployeesContent extends ContentWindow {
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudUser.editUser(userTable, txtName.getText(), txtDni.getText(), txtNss.getText(), txtEmployeeId.getText());
+                CrudUser.editUser(userTable, rowName.getTxtInput().getText(), rowDni.getTxtInput().getText(), rowNss.getTxtInput().getText(), rowEmployeeId.getTxtInput().getText());
             }
         });
         mButtonsEmployee.add(btnEdit);
@@ -202,10 +181,10 @@ public class EmployeesContent extends ContentWindow {
                     cleanInputs();
                 }
                 else {
-                    txtName.setText(userTable.getValueAt(userTable.getSelectedRow(), 0).toString());
-                    txtDni.setText(userTable.getValueAt(userTable.getSelectedRow(), 1).toString());
-                    txtNss.setText(userTable.getValueAt(userTable.getSelectedRow(), 2).toString());
-                    txtEmployeeId.setText(userTable.getValueAt(userTable.getSelectedRow(), 3).toString());
+                    rowName.setTxtInput(userTable.getValueAt(userTable.getSelectedRow(), 0).toString());
+                    rowDni.setTxtInput(userTable.getValueAt(userTable.getSelectedRow(), 1).toString());
+                    rowNss.setTxtInput(userTable.getValueAt(userTable.getSelectedRow(), 2).toString());
+                    rowEmployeeId.setTxtInput(userTable.getValueAt(userTable.getSelectedRow(), 3).toString());
                 }
             }
         });
@@ -217,9 +196,9 @@ public class EmployeesContent extends ContentWindow {
      * Método que permite limpiar el texto de los inputs (textfields)
      */
     private void cleanInputs() {
-        txtName.setText("");
-        txtDni.setText("");
-        txtNss.setText("");
-        txtEmployeeId.setText("");
+        rowName.setTxtInput("");
+        rowDni.setTxtInput("");
+        rowNss.setTxtInput("");
+        rowEmployeeId.setTxtInput("");
     }
 }

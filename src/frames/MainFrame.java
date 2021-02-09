@@ -24,7 +24,6 @@ public class MainFrame extends JFrame {
     private final JPanel emptySpace = new JPanel();
     private final EmployeesContent eContent = new EmployeesContent();
     private final ProposalContent pContent = new ProposalContent();
-    private final MainContent mContent = new MainContent();
 
     /**
      * Crea un objeto de la clase MainWindow
@@ -106,12 +105,10 @@ public class MainFrame extends JFrame {
         content.setBackground(DYE.getCONTENT());
 
         // Añadimos paneles que mostrarán el contenido, dependiendo del botón al que hagamos clic
-        content.add(mContent);
         content.add(eContent);
         content.add(pContent);
 
         // Añadimos visibilidad por defecto a los paneles (hijo)
-        mContent.setVisible(true);
         eContent.setVisible(false);
         pContent.setVisible(false);
 
@@ -123,22 +120,10 @@ public class MainFrame extends JFrame {
      * Permite añadir una serie de botones a la barra lateral con sus respectivas acciones al hacer clic
      */
     private void sbButtons() {
-        SidebarButton mainBtn = new SidebarButton("Inicio");
-        mainBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                mContent.setVisible(true);
-                eContent.setVisible(false);
-                pContent.setVisible(false);
-            }
-        });
-        sideBar.add(mainBtn);
-
         SidebarButton employeeBtn = new SidebarButton("Empleados");
         employeeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mContent.setVisible(false);
                 eContent.setVisible(true);
                 pContent.setVisible(false);
             }
@@ -149,7 +134,6 @@ public class MainFrame extends JFrame {
         proposalBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mContent.setVisible(false);
                 eContent.setVisible(false);
                 pContent.setVisible(true);
             }

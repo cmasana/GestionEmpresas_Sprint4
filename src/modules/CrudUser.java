@@ -6,7 +6,6 @@ import mainclasses.database.EmployeeDB;
 import mainclasses.io.InputOutput;
 import mainclasses.user.Employee;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * Clase CrudUser: Implementa todos los métodos para la gestión de empleados
