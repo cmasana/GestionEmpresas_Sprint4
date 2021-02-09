@@ -29,7 +29,7 @@ public class ProposalContent extends ContentWindow {
     private JTextArea txtDescription;
 
     // ComboBox
-    private static JComboBox cbEntity;
+    private static JComboBox<Entity> cbEntity;
 
     // Tabla
     private JTable proposalTable;
@@ -111,8 +111,13 @@ public class ProposalContent extends ContentWindow {
         form.add(lbDescription, gbc);
 
         txtDescription = new JTextArea();
+        txtDescription.setLineWrap(true);
+        txtDescription.setPreferredSize(new Dimension(500,40));
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(txtDescription);
+
         lbDescription.setLabelFor(txtDescription);
-        gbc.ipady = 50; // Cambia la altura
+        gbc.ipady = 40; // Cambia la altura
         gbc.gridx = 0;
         gbc.gridy = 3;
         form.add(txtDescription, gbc);
@@ -136,7 +141,7 @@ public class ProposalContent extends ContentWindow {
         gbc.gridy = 6;
         form.add(lbEntity, gbc);
 
-        cbEntity = new JComboBox(entityDB.listEntities());
+        cbEntity = new JComboBox<Entity>(entityDB.listEntities());
         lbEntity.setLabelFor(cbEntity);
         gbc.ipady = 10;
         gbc.gridx = 0;
