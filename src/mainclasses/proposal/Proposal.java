@@ -2,6 +2,9 @@ package mainclasses.proposal;
 
 import mainclasses.entity.Entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Grupo Individual Sprint 3 2020 - Carlos Masana -
  *
@@ -10,26 +13,22 @@ import mainclasses.entity.Entity;
 public class Proposal {
     private String name;
     private String description;
-    private String startDate;
-    private int queryCount;
+    private Date startDate;
     private Entity entity;
 
-    public Proposal(String name, String description, String startDate, Entity entity) {
+    public Proposal(String name, String description, Date startDate, Entity entity) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
-        this.queryCount = 0;
         this.entity = entity;
     }
 
     @Override
     public String toString() {
-        this.queryCount++;
         return "Título: " + name + " | " +
                 "Descripción: " + description + " | " +
                 "Fecha de inicio: " + startDate + " | " +
-                "Entidad asociada: " + entity.getNombre() + " | " +
-                "Consultada: " + queryCount + " veces | ";
+                "Entidad asociada: " + entity.getNombre() + " | " ;
     }
 
     // Getters & Setters
@@ -50,20 +49,12 @@ public class Proposal {
         this.description = description;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public int getQueryCount() {
-        return queryCount;
-    }
-
-    public void setQueryCount(int queryCount) {
-        this.queryCount = queryCount;
     }
 
     public Entity getEntity() {

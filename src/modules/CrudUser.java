@@ -1,7 +1,7 @@
 package modules;
 
-import custom.tables.CustomTableConfig;
-import custom.tables.CustomTableModel;
+import custom_ui.tables.CustomTableConfig;
+import custom_ui.tables.CustomTableModel;
 import mainclasses.database.EmployeeDB;
 import mainclasses.io.InputOutput;
 import mainclasses.user.Employee;
@@ -29,17 +29,22 @@ public class CrudUser {
 
         // Si hay algún campo vacío
         if (name.isEmpty() || dni.isEmpty() || nss.isEmpty() || employeeId.isEmpty()) {
-            InputOutput.printError("Error: Por favor, rellene todos los campos");
+            InputOutput.printAlert("Error: Por favor, rellene todos los campos");
         }
         else {
-            // Creamos objeto de la clase empleado
-            Employee emp = new Employee(name, dni, nss, employeeId);
+            try {
+                // Creamos objeto de la clase empleado
+                Employee emp = new Employee(name, Integer.parseInt(dni), Integer.parseInt(nss), employeeId);
 
-            // Lo añadimos al arraylist de tipo Empleado
-            employeeList.addEmployee(emp);
+                // Lo añadimos al arraylist de tipo Empleado
+                employeeList.addEmployee(emp);
 
-            // Actualizamos los datos en la tabla
-            showData(userTable);
+                // Actualizamos los datos en la tabla
+                showData(userTable);
+                
+            } catch (NumberFormatException nfe) {
+                InputOutput.printAlert("Error: Los campos DNI y NSS solo permiten números enteros");
+            }
         }
     }
 
@@ -48,20 +53,26 @@ public class CrudUser {
      * @param userTable tabla dónde se visualizan los empleados
      */
     public static void deleteUser(JTable userTable) {
+        // Almacena el resultado de un cuadro de alerta si es 0 se elimina el elemento
+        int resultado;
 
         // Guardamos el número de fila (coincide con la posición en el ArrayList)
         int row = userTable.getSelectedRow();
 
         // Si el resultado es mayor o igual a 0, eliminamos el empleado
         if (row >= 0) {
-            employeeList.removeEmployee(row);
+            resultado = InputOutput.deleteConfirmation();
 
-            // Actualizamos datos de la tabla
-            showData(userTable);
+            if (resultado == 0) {
+                employeeList.removeEmployee(row);
+
+                // Actualizamos datos de la tabla
+                showData(userTable);
+            }
         }
         // En caso contrario, mostramos un error por pantalla
         else {
-            InputOutput.printError("Error: Selecciona una fila");
+            InputOutput.printAlert("Error: Selecciona una fila");
         }
     }
 
@@ -84,7 +95,7 @@ public class CrudUser {
             showData(userTable);
         }
         else {
-            InputOutput.printError("Error: No hay ningún empleado creado");
+            InputOutput.printAlert("Error: No hay ningún empleado creado");
         }
     }
 
@@ -106,25 +117,30 @@ public class CrudUser {
 
         // Si no hay ninguna fila creada
         if (totalRows == 0) {
-            InputOutput.printError("Error: No hay ningún empleado creado");
+            InputOutput.printAlert("Error: No hay ningún empleado creado");
         }
         else {
             // Si no hay ninguna fila seleccionada
             if (selectedRow < 0) {
-                InputOutput.printError("Error: No has seleccionado ninguna fila");
+                InputOutput.printAlert("Error: No has seleccionado ninguna fila");
             }
             else {
                 // Si los campos están vacíos
                 if (name.isEmpty() || dni.isEmpty() || nss.isEmpty() || employeeId.isEmpty()) {
-                    InputOutput.printError("Error: Por favor, rellene todos los campos");
+                    InputOutput.printAlert("Error: Por favor, rellene todos los campos");
                 } else {
-                    employeeList.getEmployeeFromDB(selectedRow).setName(name);
-                    employeeList.getEmployeeFromDB(selectedRow).setDni(dni);
-                    employeeList.getEmployeeFromDB(selectedRow).setNss(nss);
-                    employeeList.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
+                    try {
+                        employeeList.getEmployeeFromDB(selectedRow).setName(name);
+                        employeeList.getEmployeeFromDB(selectedRow).setDni(Integer.parseInt(dni));
+                        employeeList.getEmployeeFromDB(selectedRow).setNss(Integer.parseInt(nss));
+                        employeeList.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
 
-                    // Actualizamos datos de la tabla
-                    showData(userTable);
+                        // Actualizamos datos de la tabla
+                        showData(userTable);
+
+                    } catch (NumberFormatException nfe) {
+                        InputOutput.printAlert("Error: Los campos DNI y NSS solo permiten números enteros");
+                    }
                 }
             }
         }
@@ -144,8 +160,8 @@ public class CrudUser {
 
             // Datos de cada Empleado
             tablaUsuarios[i][0] = employeeList.getEmployeeFromDB(i).getName();
-            tablaUsuarios[i][1] = employeeList.getEmployeeFromDB(i).getDni();
-            tablaUsuarios[i][2] = employeeList.getEmployeeFromDB(i).getNss();
+            tablaUsuarios[i][1] = String.valueOf(employeeList.getEmployeeFromDB(i).getDni());
+            tablaUsuarios[i][2] = String.valueOf(employeeList.getEmployeeFromDB(i).getNss());
             tablaUsuarios[i][3] = employeeList.getEmployeeFromDB(i).getEmployeeId();
         }
 

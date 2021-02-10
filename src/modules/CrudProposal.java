@@ -1,13 +1,14 @@
 package modules;
 
-import custom.tables.CustomTableConfig;
-import custom.tables.CustomTableModel;
+import custom_ui.tables.CustomTableConfig;
+import custom_ui.tables.CustomTableModel;
 import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
 import mainclasses.io.InputOutput;
 import mainclasses.proposal.Proposal;
 
 import javax.swing.*;
+import java.text.ParseException;
 
 
 /**
@@ -31,17 +32,22 @@ public class CrudProposal {
 
         // Si hay algún campo vacío
         if (name.isEmpty() || description.isEmpty() || startDate.isEmpty() || entity == null) {
-            InputOutput.printError("Error: Por favor, rellene todos los campos");
+            InputOutput.printAlert("Error: Por favor, rellene todos los campos");
         }
         else {
-            // Creamos objeto de la clase Proposal
-            Proposal prop = new Proposal(name, description, startDate, entity);
+            try {
+                // Creamos objeto de la clase Proposal
+                Proposal prop = new Proposal(name, description, InputOutput.stringToDate(startDate), entity);
 
-            // Lo añadimos al arraylist de tipo Proposal
-            proposalList.addProposal(prop);
+                // Lo añadimos al arraylist de tipo Proposal
+                proposalList.addProposal(prop);
 
-            // Actualizamos los datos en la tabla
-            showData(proposalTable);
+                // Actualizamos los datos en la tabla
+                showData(proposalTable);
+
+            } catch (ParseException pe) {
+                InputOutput.printAlert("Error: Fecha con formato desconocido");
+            }
         }
     }
 
@@ -51,20 +57,27 @@ public class CrudProposal {
      * @param proposalTable tabla donde se visualizan las propuestas
      */
     public static void deleteProposal(JTable proposalTable) {
+        // Almacena el resultado de un cuadro de alerta si es 0 se elimina el elemento
+        int resultado;
 
         // Guardamos el número de fila (coincide con la posición en el ArrayList)
         int row = proposalTable.getSelectedRow();
 
         // Si el resultado es mayor o igual a 0, eliminamos la propuesta
         if (row >= 0) {
-            proposalList.removeProposal(row);
+            // Mensaje de confirmación para eliminar
+            resultado = InputOutput.deleteConfirmation();
 
-            // Actualizamos datos de la tabla
-            showData(proposalTable);
+            if (resultado == 0) {
+                proposalList.removeProposal(row);
+
+                // Actualizamos datos de la tabla
+                showData(proposalTable);
+            }
         }
         // En caso contrario, mostramos un error por pantalla
         else {
-            InputOutput.printError("Error: Selecciona una fila");
+            InputOutput.printAlert("Error: Selecciona una fila");
         }
     }
 
@@ -87,7 +100,7 @@ public class CrudProposal {
             showData(proposalTable);
         }
         else {
-            InputOutput.printError("Error: No hay ningún empleado creado");
+            InputOutput.printAlert("Error: No hay ningún empleado creado");
         }
     }
 
@@ -99,7 +112,7 @@ public class CrudProposal {
      * @param startDate fecha de la propuesta
      * @param cbEntity comboBox con la lista de entidades
      */
-    public static void editProposal(JTable proposalTable, String name, String description, String startDate , JComboBox cbEntity) {
+    public static void editProposal(JTable proposalTable, String name, String description, String startDate , JComboBox<Entity> cbEntity) {
 
         // Almacenamos el nº total de filas que hay en la tabla
         int totalRows = proposalTable.getRowCount();
@@ -113,25 +126,30 @@ public class CrudProposal {
 
         // Si no hay ninguna fila creada
         if (totalRows == 0) {
-            InputOutput.printError("Error: No hay ningún empleado creado");
+            InputOutput.printAlert("Error: No hay ningún empleado creado");
         }
         else {
             // Si no hay ninguna fila seleccionada
             if (selectedRow < 0) {
-                InputOutput.printError("Error: No has seleccionado ninguna fila");
+                InputOutput.printAlert("Error: No has seleccionado ninguna fila");
             }
             else {
                 // Si los campos están vacíos
                 if (name.isEmpty() || description.isEmpty() || startDate.isEmpty()) {
-                    InputOutput.printError("Error: Por favor, rellene todos los campos");
+                    InputOutput.printAlert("Error: Por favor, rellene todos los campos");
                 } else {
-                    proposalList.getProposalFromDB(selectedRow).setName(name);
-                    proposalList.getProposalFromDB(selectedRow).setDescription(description);
-                    proposalList.getProposalFromDB(selectedRow).setStartDate(startDate);
-                    proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
+                    try {
+                        proposalList.getProposalFromDB(selectedRow).setName(name);
+                        proposalList.getProposalFromDB(selectedRow).setDescription(description);
+                        proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
+                        proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
 
-                    // Actualizamos datos de la tabla
-                    showData(proposalTable);
+                        // Actualizamos datos de la tabla
+                        showData(proposalTable);
+
+                    } catch (ParseException pe) {
+                        InputOutput.printAlert("Error: Fecha con formato desconocido");
+                    }
                 }
             }
         }
@@ -152,7 +170,7 @@ public class CrudProposal {
             // Datos de cada Empleado
             tabla[i][0] = proposalList.getProposalFromDB(i).getName();
             tabla[i][1] = proposalList.getProposalFromDB(i).getDescription();
-            tabla[i][2] = proposalList.getProposalFromDB(i).getStartDate();
+            tabla[i][2] = InputOutput.dateToString(proposalList.getProposalFromDB(i).getStartDate());
             tabla[i][3] = proposalList.getProposalFromDB(i).getEntity().toString();
         }
 
