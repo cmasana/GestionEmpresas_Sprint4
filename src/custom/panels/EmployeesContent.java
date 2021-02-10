@@ -1,5 +1,6 @@
 package custom.panels;
 
+import custom.other.ImageButton;
 import custom.other.RowForm;
 import custom.tables.CustomTableConfig;
 import modules.CrudUser;
@@ -89,13 +90,14 @@ public class EmployeesContent extends ContentWindow {
     private void putManagementButtons() {
 
         JPanel mButtonsEmployee = new JPanel();
-        mButtonsEmployee.setLayout(new GridLayout(10, 1, 10,10));
-        mButtonsEmployee.setBorder(new EmptyBorder(110,0,0,0)); // Top, left, bottom, right
+        mButtonsEmployee.setLayout(new BoxLayout(mButtonsEmployee, BoxLayout.Y_AXIS));
+        mButtonsEmployee.setBorder(new EmptyBorder(110,100,10,0)); // Top, left, bottom, right
         mButtonsEmployee.setBackground(DYE.getCONTENT());
 
         // Botón Crear
-        JButton btnCreate = new JButton("CREAR");
-        btnCreate.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnCreate = new ImageButton("create.png", "CREAR");
+        btnCreate.setPreferredSize(new Dimension(150, 40));
+        btnCreate.setMaximumSize(new Dimension(150, 40));
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -105,9 +107,13 @@ public class EmployeesContent extends ContentWindow {
         });
         mButtonsEmployee.add(btnCreate);
 
+        // Crea un espacio en blanco de separación
+        mButtonsEmployee.add(Box.createRigidArea(new Dimension(0, 5)));
+
         // Botón editar
-        JButton btnEdit = new JButton("MODIFICAR");
-        btnEdit.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnEdit = new ImageButton("edit.png", "MODIFICAR");
+        btnEdit.setPreferredSize(new Dimension(150, 40));
+        btnEdit.setMaximumSize(new Dimension(150, 40));
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -116,20 +122,28 @@ public class EmployeesContent extends ContentWindow {
         });
         mButtonsEmployee.add(btnEdit);
 
+        // Crea un espacio en blanco de separación
+        mButtonsEmployee.add(Box.createRigidArea(new Dimension(0, 5)));
+
         // Botón eliminar
-        JButton delUser = new JButton("ELIMINAR");
-        delUser.setPreferredSize(new Dimension(120, 35));
-        delUser.addActionListener(new ActionListener() {
+        ImageButton btnDelete = new ImageButton("delete.png", "ELIMINAR");
+        btnDelete.setPreferredSize(new Dimension(150, 40));
+        btnDelete.setMaximumSize(new Dimension(150, 40));
+        btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 CrudUser.deleteUser(userTable);
             }
         });
-        mButtonsEmployee.add(delUser);
+        mButtonsEmployee.add(btnDelete);
+
+        // Crea un espacio en blanco de separación
+        mButtonsEmployee.add(Box.createRigidArea(new Dimension(0, 5)));
 
         // Botón vaciar lista
-        JButton btnEmpty = new JButton("VACIAR");
-        btnEmpty.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnEmpty = new ImageButton("empty.png", "VACIAR");
+        btnEmpty.setPreferredSize(new Dimension(150, 40));
+        btnEmpty.setMaximumSize(new Dimension(150, 40));
         btnEmpty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -137,6 +151,8 @@ public class EmployeesContent extends ContentWindow {
             }
         });
         mButtonsEmployee.add(btnEmpty);
+
+        mButtonsEmployee.setVisible(true);
 
         management.add(mButtonsEmployee, BorderLayout.WEST);
     }

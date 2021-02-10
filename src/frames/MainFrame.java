@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 /**
  * Permite crear la ventana principal de nuestra aplicación con todas sus configuraciones
@@ -81,7 +82,8 @@ public class MainFrame extends JFrame {
      * Permite añadir el logo de la barra lateral
      */
     private void sbLogo() {
-        JLabel imageLogo = new JLabel(new ImageIcon("src/Images/logo.png"));
+        JLabel imageLogo;
+        imageLogo = new JLabel(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("logo.png"))));
         imageLogo.setBorder(new EmptyBorder(50,0,20,0)); // Top, left, bottom, right
         sideBar.add(imageLogo);
     }
@@ -109,7 +111,7 @@ public class MainFrame extends JFrame {
         content.add(pContent);
 
         // Añadimos visibilidad por defecto a los paneles (hijo)
-        eContent.setVisible(false);
+        eContent.setVisible(true);
         pContent.setVisible(false);
 
         // Añadimos panel (padre)

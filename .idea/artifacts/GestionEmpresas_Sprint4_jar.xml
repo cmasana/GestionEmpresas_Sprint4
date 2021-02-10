@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GestionEmpresas_Sprint4:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GestionEmpresas_Sprint4_jar</output-path>
+    <root id="archive" name="GestionEmpresas_Sprint4.jar">
+      <element id="module-output" name="GestionEmpresas_Sprint4" />
+    </root>
+  </artifact>
+</component>

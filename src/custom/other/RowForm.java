@@ -22,7 +22,7 @@ public class RowForm extends JPanel {
 
     public RowForm(String labelTitle) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBorder(new EmptyBorder(25, 200, 20, 200));
+        this.setBorder(new EmptyBorder(25, 75, 20, 300));
         this.setBackground(DYE.getCONTENT());
         this.setLabelTitle(labelTitle);
         this.setInputField();

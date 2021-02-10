@@ -1,5 +1,6 @@
 package custom.panels;
 
+import custom.other.ImageButton;
 import custom.tables.CustomTableConfig;
 import custom.tables.CustomTableModel;
 import mainclasses.database.EmployeeDB;
@@ -158,13 +159,14 @@ public class ProposalContent extends ContentWindow {
     private void putManagementButtons() {
 
         JPanel mButtonsProposal = new JPanel();
-        mButtonsProposal.setLayout(new GridLayout(10, 1, 10,10));
-        mButtonsProposal.setBorder(new EmptyBorder(110,0,0,0)); // Top, left, bottom, right
+        mButtonsProposal.setLayout(new BoxLayout(mButtonsProposal, BoxLayout.Y_AXIS));
+        mButtonsProposal.setBorder(new EmptyBorder(110,100,0,0)); // Top, left, bottom, right
         mButtonsProposal.setBackground(DYE.getCONTENT());
 
         // Botón Crear
-        JButton btnCreate = new JButton("CREAR");
-        btnCreate.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnCreate = new ImageButton("create.png", "CREAR");
+        btnCreate.setPreferredSize(new Dimension(150, 40));
+        btnCreate.setMaximumSize(new Dimension(150, 40));
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -174,9 +176,13 @@ public class ProposalContent extends ContentWindow {
         });
         mButtonsProposal.add(btnCreate);
 
+        // Crea un espacio en blanco de separación
+        mButtonsProposal.add(Box.createRigidArea(new Dimension(0, 5)));
+
         // Botón editar
-        JButton btnEdit = new JButton("MODIFICAR");
-        btnEdit.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnEdit = new ImageButton("edit.png", "MODIFICAR");
+        btnEdit.setPreferredSize(new Dimension(150, 40));
+        btnEdit.setMaximumSize(new Dimension(150, 40));
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -185,9 +191,13 @@ public class ProposalContent extends ContentWindow {
         });
         mButtonsProposal.add(btnEdit);
 
+        // Crea un espacio en blanco de separación
+        mButtonsProposal.add(Box.createRigidArea(new Dimension(0, 5)));
+
         // Botón eliminar
-        JButton btnDelete = new JButton("ELIMINAR");
-        btnDelete.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnDelete = new ImageButton("delete.png", "ELIMINAR");
+        btnDelete.setPreferredSize(new Dimension(150, 40));
+        btnDelete.setMaximumSize(new Dimension(150, 40));
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -196,9 +206,13 @@ public class ProposalContent extends ContentWindow {
         });
         mButtonsProposal.add(btnDelete);
 
+        // Crea un espacio en blanco de separación
+        mButtonsProposal.add(Box.createRigidArea(new Dimension(0, 5)));
+
         // Botón vaciar lista
-        JButton btnEmpty = new JButton("VACIAR");
-        btnEmpty.setPreferredSize(new Dimension(120, 35));
+        ImageButton btnEmpty = new ImageButton("empty.png", "VACIAR");
+        btnEmpty.setPreferredSize(new Dimension(150, 40));
+        btnEmpty.setMaximumSize(new Dimension(150, 40));
         btnEmpty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
