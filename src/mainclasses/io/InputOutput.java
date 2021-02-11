@@ -60,6 +60,14 @@ public class InputOutput {
      * @return devuelve un entero, OK = 0
      */
     public static int deleteConfirmation() {
-       return JOptionPane.showConfirmDialog(null, "Estás seguro?", "El elemento va a ser eliminado.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+       return JOptionPane.showConfirmDialog(null, "Estás seguro?", "El elemento va a ser eliminado", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    /**
+     * Muestra un mensaje de confirmación cuando queremos eliminar todos los elementos
+     * @return devuelve un entero, OK = 0
+     */
+    public static int emptyConfirmation() {
+        return JOptionPane.showConfirmDialog(null, "Estás seguro?", "Se eliminarán todos los elementos", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 }

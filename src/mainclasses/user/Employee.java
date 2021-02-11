@@ -24,7 +24,7 @@ public class Employee extends User {
      * @param nss         número de la seguridad social del empleado
      * @param employeeId  número de identificación de cada empleado
      */
-    public Employee(String name, int dni, int nss, String employeeId) {
+    public Employee(String name, String dni, String nss, String employeeId) {
         super(name, dni, nss);
         this.employeeId = employeeId;
     }

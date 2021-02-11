@@ -1,10 +1,9 @@
 package modules;
 
-import custom_ui.tables.CustomTableConfig;
-import custom_ui.tables.CustomTableModel;
+import custom_ui.tables.*;
 import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
-import mainclasses.io.InputOutput;
+import mainclasses.io.*;
 import mainclasses.proposal.Proposal;
 
 import javax.swing.*;
@@ -19,7 +18,6 @@ public class CrudProposal {
     // Array de tipo ProposalDB
     private final static ProposalDB proposalList = new ProposalDB();
 
-
     /**
      * Permite crear propuestas
      * @param proposalTable tabla donde se visualizan las propuestas
@@ -30,24 +28,28 @@ public class CrudProposal {
      */
     public static void createProposal(JTable proposalTable, String name, String description, String startDate, Entity entity) {
 
-        // Si hay algún campo vacío
-        if (name.isEmpty() || description.isEmpty() || startDate.isEmpty() || entity == null) {
-            InputOutput.printAlert("Error: Por favor, rellene todos los campos");
-        }
-        else {
-            try {
-                // Creamos objeto de la clase Proposal
-                Proposal prop = new Proposal(name, description, InputOutput.stringToDate(startDate), entity);
+        try {
+            // Si hay algún campo vacío
+            if (name.isEmpty() || description.isEmpty() || startDate.isEmpty() || entity == null) {
+                throw new CustomException(1111);
 
-                // Lo añadimos al arraylist de tipo Proposal
-                proposalList.addProposal(prop);
+            } else {
+                try {
+                    // Creamos objeto de la clase Proposal
+                    Proposal prop = new Proposal(name, description, InputOutput.stringToDate(startDate), entity);
 
-                // Actualizamos los datos en la tabla
-                showData(proposalTable);
+                    // Lo añadimos al arraylist de tipo Proposal
+                    proposalList.addProposal(prop);
 
-            } catch (ParseException pe) {
-                InputOutput.printAlert("Error: Fecha con formato desconocido");
+                    // Actualizamos los datos en la tabla
+                    showData(proposalTable);
+
+                } catch (ParseException pe) {
+                    InputOutput.printAlert("Error: Fecha con formato desconocido");
+                }
             }
+        } catch (CustomException ce) {
+            InputOutput.printAlert(ce.getMessage());
         }
     }
 
@@ -58,26 +60,31 @@ public class CrudProposal {
      */
     public static void deleteProposal(JTable proposalTable) {
         // Almacena el resultado de un cuadro de alerta si es 0 se elimina el elemento
-        int resultado;
+        int ok;
 
         // Guardamos el número de fila (coincide con la posición en el ArrayList)
         int row = proposalTable.getSelectedRow();
 
-        // Si el resultado es mayor o igual a 0, eliminamos la propuesta
-        if (row >= 0) {
-            // Mensaje de confirmación para eliminar
-            resultado = InputOutput.deleteConfirmation();
+        try {
+            // Si hay una fila seleccionada, mostramos mensaje de confirmación
+            if (row >= 0) {
+                // Mensaje de confirmación para eliminar
+                ok = InputOutput.deleteConfirmation();
 
-            if (resultado == 0) {
-                proposalList.removeProposal(row);
+                // Si el resultado es igual a 0, eliminamos la propuesta
+                if (ok == 0) {
+                    proposalList.removeProposal(row);
 
-                // Actualizamos datos de la tabla
-                showData(proposalTable);
+                    // Actualizamos datos de la tabla
+                    showData(proposalTable);
+                }
             }
-        }
-        // En caso contrario, mostramos un error por pantalla
-        else {
-            InputOutput.printAlert("Error: Selecciona una fila");
+            // En caso contrario, mostramos un error por pantalla
+            else {
+                throw new CustomException(1114);
+            }
+        } catch (CustomException ce) {
+            InputOutput.printAlert(ce.getMessage());
         }
     }
 
@@ -86,21 +93,31 @@ public class CrudProposal {
      * @param proposalTable tabla donde se visualizan las propuestas creadas
      */
     public static void emptyAll(JTable proposalTable) {
+        // Almacena un entero, si es 0 se eliminan todos los elementos
+        int ok;
 
         // Almacenamos el nº total de filas que hay en la tabla
         int totalrows = proposalTable.getRowCount();
 
-        if (totalrows != 0) {
-            // Recorremos el arrayList y eliminamos 1 a 1 los registros
-            for (int i = (totalrows - 1); i >= 0; i--) {
-                proposalList.removeProposal(i);
-            }
+        try {
+            if (totalrows != 0) {
+                // Mensaje de confirmación para eliminar
+                ok = InputOutput.emptyConfirmation();
 
-            // Actualizamos los datos de la tabla
-            showData(proposalTable);
-        }
-        else {
-            InputOutput.printAlert("Error: No hay ningún empleado creado");
+                if (ok == 0) {
+                    // Recorremos el arrayList y eliminamos 1 a 1 los registros
+                    for (int i = (totalrows - 1); i >= 0; i--) {
+                        proposalList.removeProposal(i);
+                    }
+
+                    // Actualizamos los datos de la tabla
+                    showData(proposalTable);
+                }
+            } else {
+                throw new CustomException(1116);
+            }
+        } catch (CustomException ce) {
+            InputOutput.printAlert(ce.getMessage());
         }
     }
 
@@ -123,35 +140,36 @@ public class CrudProposal {
         // Almacena el item seleccionado del comboBox
         Entity itemSelected = (Entity) cbEntity.getSelectedItem();
 
-
-        // Si no hay ninguna fila creada
-        if (totalRows == 0) {
-            InputOutput.printAlert("Error: No hay ningún empleado creado");
-        }
-        else {
-            // Si no hay ninguna fila seleccionada
-            if (selectedRow < 0) {
-                InputOutput.printAlert("Error: No has seleccionado ninguna fila");
-            }
-            else {
-                // Si los campos están vacíos
-                if (name.isEmpty() || description.isEmpty() || startDate.isEmpty()) {
-                    InputOutput.printAlert("Error: Por favor, rellene todos los campos");
+        try {
+            // Si no hay ninguna fila creada
+            if (totalRows == 0) {
+                throw new CustomException(1116);
+            } else {
+                // Si no hay ninguna fila seleccionada
+                if (selectedRow < 0) {
+                    throw new CustomException(1114);
                 } else {
-                    try {
-                        proposalList.getProposalFromDB(selectedRow).setName(name);
-                        proposalList.getProposalFromDB(selectedRow).setDescription(description);
-                        proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
-                        proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
+                    // Si los campos están vacíos
+                    if (name.isEmpty() || description.isEmpty() || startDate.isEmpty()) {
+                        throw new CustomException(1111);
+                    } else {
+                        try {
+                            proposalList.getProposalFromDB(selectedRow).setName(name);
+                            proposalList.getProposalFromDB(selectedRow).setDescription(description);
+                            proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
+                            proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
 
-                        // Actualizamos datos de la tabla
-                        showData(proposalTable);
+                            // Actualizamos datos de la tabla
+                            showData(proposalTable);
 
-                    } catch (ParseException pe) {
-                        InputOutput.printAlert("Error: Fecha con formato desconocido");
+                        } catch (ParseException pe) {
+                            InputOutput.printAlert("Error: Fecha con formato desconocido");
+                        }
                     }
                 }
             }
+        } catch (CustomException ce) {
+            InputOutput.printAlert(ce.getMessage());
         }
     }
 

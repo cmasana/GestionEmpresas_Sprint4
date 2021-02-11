@@ -72,10 +72,10 @@ public class EmployeesContent extends ContentWindow {
         rowName = new RowForm("Nombre");
         form.add(rowName);
 
-        rowDni = new RowForm("DNI (8 dígitos)");
+        rowDni = new RowForm("DNI (8 dígitos y 1 letra)");
         form.add(rowDni);
 
-        rowNss = new RowForm("NSS (8 dígitos)");
+        rowNss = new RowForm("NSS (12 dígitos)");
         form.add(rowNss);
 
         rowEmployeeId = new RowForm("Cod. Empleado");
