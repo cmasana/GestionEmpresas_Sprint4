@@ -10,6 +10,10 @@ public class CustomException extends Exception {
         this.errorId = errorId;
     }
 
+    /**
+     * Muestra un mensaje de alerta dependiendo del código de error
+     * @return devuelve un String con el mensaje de error
+     */
     @Override
     public String getMessage() {
         String alertMessage = "";
