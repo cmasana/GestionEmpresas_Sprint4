@@ -7,14 +7,28 @@ import mainclasses.user.Employee;
 import validations.*;
 
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * Clase CrudUser: Implementa todos los métodos para la gestión de empleados
  */
 public class CrudUser {
+    // Log y errores
+    private static Log myLog;
+
+    static {
+        try {
+            myLog = new Log("./log.txt", false);
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+    }
 
     // Array de tipo EmpleadoDB
     private final static EmployeeDB employeeList = new EmployeeDB();
+
+    public CrudUser() {
+    }
 
     /**
      * Permite crear un usuario y visualizarlo en tiempo real en su correspondiente tabla
@@ -46,11 +60,14 @@ public class CrudUser {
                     // Lo añadimos al arraylist de tipo Empleado
                     employeeList.addEmployee(emp);
 
+                    // Añadimos la entrada al log
+                    myLog.addLine("CREATE " + emp.toString(), false);
+
                     // Actualizamos los datos en la tabla
                     showData(userTable);
                 }
             }
-        } catch (CustomException ce) {
+        } catch (CustomException | IOException ce) {
             InputOutput.printAlert(ce.getMessage());
         }
     }
@@ -74,6 +91,11 @@ public class CrudUser {
 
                 // Si el resultado es igual a 0, eliminamos el empleado
                 if (resultado == 0) {
+
+                    // Añadimos la entrada al log
+                    myLog.addLine("DELETE " + employeeList.getEmployeeFromDB(row), false);
+
+                    // Eliminamos empleado
                     employeeList.removeEmployee(row);
 
                     // Actualizamos datos de la tabla
@@ -84,7 +106,7 @@ public class CrudUser {
             else {
                 throw new CustomException(1114);
             }
-        } catch (CustomException ce) {
+        } catch (CustomException | IOException ce) {
             InputOutput.printAlert(ce.getMessage());
         }
     }
@@ -165,13 +187,16 @@ public class CrudUser {
                             employeeList.getEmployeeFromDB(selectedRow).setNss(nss);
                             employeeList.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
 
+                            // Añadimos la entrada al log
+                            myLog.addLine("EDIT " + name + " " + dni + " " + nss + "  " + employeeId, false);
+
                             // Actualizamos datos de la tabla
                             showData(userTable);
                         }
                     }
                 }
             }
-        } catch (CustomException ce) {
+        } catch (CustomException | IOException ce) {
             InputOutput.printAlert(ce.getMessage());
         }
     }

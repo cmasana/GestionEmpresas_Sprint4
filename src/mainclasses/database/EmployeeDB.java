@@ -50,6 +50,7 @@ public  class EmployeeDB extends ArrayList<Employee> {
     public int sizeEmployeeDB() {
         return listaEmpleados.size();
     }
+
 }
 
 

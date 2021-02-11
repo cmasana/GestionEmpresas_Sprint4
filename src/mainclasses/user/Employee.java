@@ -48,7 +48,6 @@ public class Employee extends User {
      */
     public String toString() {
         return  super.toString() +
-                "Cod. Empleado: " +
-                this.employeeId;
+                " " + this.employeeId;
     }
 }
