@@ -21,6 +21,16 @@ public class ColorsPalette {
     private final Color TEXTPRESSED = new Color(207, 117,0);
     private final Color TEXTRELEASED = new Color(244,244,244);
 
+    // Colores tema diferente
+    private final Color GZSIDEBAR = new Color(117,216,254);
+    private final Color GZCONTENT = new Color(255,255,255);
+    private final Color GZMAINBTN = new Color(117,216,254);
+    private final Color GZHOVERBTN = new Color(40,156,199);
+    private final Color GZTEXTHOVER = new Color(255,255,255);
+    private final Color GZTEXTNORMAL = new Color(26,28,32);
+    private final Color GZTEXTPRESSED = new Color(40,156,199);
+    private final Color GZTEXTRELEASED = new Color(255,255,255);
+
     // Getters
     public Color getSIDEBAR() {
         return SIDEBAR;
