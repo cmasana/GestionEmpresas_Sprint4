@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.Iterator;
 
 
-public class Log {
+public class Error {
 
     private BufferedWriter buffered;
     private final String path; // Ruta del archivo
 
-    public Log(String path, boolean append) throws IOException {
+    public Error(String path, boolean append) throws IOException {
         this.path = path;
         this.open(append);
     }
@@ -58,6 +58,17 @@ public class Log {
     // Cerramos buffer
     private void close() throws IOException {
         this.buffered.close();
+    }
+
+    // Captura un error y lo escribe dentro del archivo correspondiente
+    public void capturarError(Error myError, String alerta) {
+        try {
+            myError.addLine(alerta, true); // TRUE para que no sobreescriba
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+
     }
 
 }

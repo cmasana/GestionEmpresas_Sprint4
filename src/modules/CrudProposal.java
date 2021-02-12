@@ -4,9 +4,11 @@ import custom_ui.tables.*;
 import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
 import mainclasses.io.*;
+import mainclasses.io.Error;
 import mainclasses.proposal.Proposal;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.text.ParseException;
 
 
@@ -15,6 +17,26 @@ import java.text.ParseException;
  * @author cmasana
  */
 public class CrudProposal {
+    // Log y errores
+    private static Log myLog;
+    private static Error myError;
+
+    static {
+        try {
+            myLog = new Log("./log.txt", true);
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+    }
+
+    static {
+        try {
+            myError = new Error("./error.txt", true);
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+    }
+
     // Array de tipo ProposalDB
     private final static ProposalDB proposalList = new ProposalDB();
 
@@ -41,15 +63,28 @@ public class CrudProposal {
                     // Lo añadimos al arraylist de tipo Proposal
                     proposalList.addProposal(prop);
 
+                    // Añadimos la entrada al log
+                    myLog.addLine("PROPOSAL CREATE " + prop.toString(), true);
+
                     // Actualizamos los datos en la tabla
                     showData(proposalTable);
 
                 } catch (ParseException pe) {
-                    InputOutput.printAlert("Error: Fecha con formato desconocido");
+                    String alerta = "Error: Fecha con formato desconocido";
+                    InputOutput.printAlert(alerta);
+
+                    // Capturamos error para el registro
+                    myError.capturarError(myError, "PROPOSAL " + alerta);
                 }
             }
         } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
     }
 
@@ -73,6 +108,10 @@ public class CrudProposal {
 
                 // Si el resultado es igual a 0, eliminamos la propuesta
                 if (ok == 0) {
+                    // Añadimos la entrada al log
+                    myLog.addLine("EMPLOYEE DELETE " + proposalList.getProposalFromDB(row), true);
+
+                    // Eliminamos propuesta
                     proposalList.removeProposal(row);
 
                     // Actualizamos datos de la tabla
@@ -85,6 +124,12 @@ public class CrudProposal {
             }
         } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
     }
 
@@ -118,6 +163,9 @@ public class CrudProposal {
             }
         } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
         }
     }
 
@@ -150,7 +198,7 @@ public class CrudProposal {
                     throw new CustomException(1114);
                 } else {
                     // Si los campos están vacíos
-                    if (name.isEmpty() || description.isEmpty() || startDate.isEmpty()) {
+                    if (name.isEmpty() || description.isEmpty() || startDate.isEmpty() || itemSelected == null) {
                         throw new CustomException(1111);
                     } else {
                         try {
@@ -159,17 +207,33 @@ public class CrudProposal {
                             proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
                             proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
 
+                            // Añadimos la entrada al log
+                            myLog.addLine("PROPOSAL EDIT " + name + " "
+                                                                + description + " "
+                                                                + InputOutput.stringToDate(startDate) + "  "
+                                                                + itemSelected.toString(), true);
+
                             // Actualizamos datos de la tabla
                             showData(proposalTable);
 
                         } catch (ParseException pe) {
-                            InputOutput.printAlert("Error: Fecha con formato desconocido");
+                            String alerta = "Error: Fecha con formato desconocido";
+                            InputOutput.printAlert(alerta);
+
+                            // Capturamos error para el registro
+                            myError.capturarError(myError, "PROPOSAL " + alerta);
+
+                        } catch (IOException e) {
+                            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
                         }
                     }
                 }
             }
         } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
         }
     }
 

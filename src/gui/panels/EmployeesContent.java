@@ -3,7 +3,6 @@ package gui.panels;
 import custom_ui.components.buttons.ImageButton;
 import custom_ui.components.forms.*;
 import custom_ui.tables.CustomTableConfig;
-import mainclasses.io.Log;
 import modules.CrudUser;
 
 import javax.swing.*;
@@ -13,8 +12,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 public class EmployeesContent extends ContentWindow {
 

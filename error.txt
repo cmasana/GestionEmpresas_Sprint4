@@ -1,0 +1,11 @@
+[12/02/2021 01:46:10] PROPOSAL Error: Por favor, rellene todos los campos
+[12/02/2021 01:46:13] PROPOSAL Error: No hay ninguna propuesta creada
+[12/02/2021 01:46:17] PROPOSAL Error: No hay ninguna fila seleccionada
+[12/02/2021 01:46:20] PROPOSAL Error: No hay ninguna propuesta creada
+[12/02/2021 01:52:59] EMPLOYEE Error: Por favor, rellene todos los campos
+[12/02/2021 01:53:01] EMPLOYEE Error: No hay ninguna fila seleccionada
+[12/02/2021 01:53:04] EMPLOYEE Error: No hay ninguna fila seleccionada
+[12/02/2021 01:53:11] EMPLOYEE Error: Por favor, rellene todos los campos
+[12/02/2021 01:53:21] PROPOSAL Error: Fecha con formato desconocido
+[12/02/2021 01:53:36] PROPOSAL Error: No hay ninguna fila seleccionada
+[12/02/2021 01:53:38] PROPOSAL Error: No hay ninguna fila seleccionada

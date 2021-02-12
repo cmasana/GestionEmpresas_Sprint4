@@ -3,6 +3,7 @@ package modules;
 import custom_ui.tables.*;
 import mainclasses.database.EmployeeDB;
 import mainclasses.io.*;
+import mainclasses.io.Error;
 import mainclasses.user.Employee;
 import validations.*;
 
@@ -15,10 +16,19 @@ import java.io.IOException;
 public class CrudUser {
     // Log y errores
     private static Log myLog;
+    private static Error myError;
 
     static {
         try {
-            myLog = new Log("./log.txt", false);
+            myLog = new Log("./log.txt", true);
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+    }
+
+    static {
+        try {
+            myError = new Error("./error.txt", true);
         } catch (IOException e) {
             InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
@@ -27,8 +37,6 @@ public class CrudUser {
     // Array de tipo EmpleadoDB
     private final static EmployeeDB employeeList = new EmployeeDB();
 
-    public CrudUser() {
-    }
 
     /**
      * Permite crear un usuario y visualizarlo en tiempo real en su correspondiente tabla
@@ -61,14 +69,20 @@ public class CrudUser {
                     employeeList.addEmployee(emp);
 
                     // Añadimos la entrada al log
-                    myLog.addLine("CREATE " + emp.toString(), false);
+                    myLog.addLine("EMPLOYEE CREATE " + emp.toString(), true);
 
                     // Actualizamos los datos en la tabla
                     showData(userTable);
                 }
             }
-        } catch (CustomException | IOException ce) {
+        } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
     }
 
@@ -93,7 +107,7 @@ public class CrudUser {
                 if (resultado == 0) {
 
                     // Añadimos la entrada al log
-                    myLog.addLine("DELETE " + employeeList.getEmployeeFromDB(row), false);
+                    myLog.addLine("EMPLOYEE DELETE " + employeeList.getEmployeeFromDB(row), true);
 
                     // Eliminamos empleado
                     employeeList.removeEmployee(row);
@@ -106,8 +120,14 @@ public class CrudUser {
             else {
                 throw new CustomException(1114);
             }
-        } catch (CustomException | IOException ce) {
+        } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
     }
 
@@ -142,6 +162,9 @@ public class CrudUser {
             }
         } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
         }
     }
 
@@ -188,7 +211,8 @@ public class CrudUser {
                             employeeList.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
 
                             // Añadimos la entrada al log
-                            myLog.addLine("EDIT " + name + " " + dni + " " + nss + "  " + employeeId, false);
+                            myLog.addLine("EMPLOYEE EDIT " + name + " " + dni + " "
+                                                                + nss + "  " + employeeId, true);
 
                             // Actualizamos datos de la tabla
                             showData(userTable);
@@ -196,8 +220,14 @@ public class CrudUser {
                     }
                 }
             }
-        } catch (CustomException | IOException ce) {
+        } catch (CustomException ce) {
             InputOutput.printAlert(ce.getMessage());
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
     }
 
