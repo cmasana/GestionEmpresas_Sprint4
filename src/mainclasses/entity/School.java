@@ -6,7 +6,6 @@ package mainclasses.entity;
  * Clase School: Define los atributos y métodos de la clase School
  */
 public class School extends Entity {
-
     private String codTerritorial;
 
     /**

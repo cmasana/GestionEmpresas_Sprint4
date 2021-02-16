@@ -12,7 +12,6 @@ public class Project {
     private String name;
     private Employee manager;
     private String description;
-    private Proposal proposal;
 
     public Project(String name, String description, Employee manager) {
         this.name = name;
