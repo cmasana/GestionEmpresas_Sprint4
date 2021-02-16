@@ -2,7 +2,6 @@ package mainclasses.proposal;
 
 import mainclasses.entity.Entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
