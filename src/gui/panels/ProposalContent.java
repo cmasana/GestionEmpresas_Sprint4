@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ProposalContent extends ContentWindow {
     // Paneles
@@ -40,7 +41,7 @@ public class ProposalContent extends ContentWindow {
     private final static EmployeeDB employeeDB = new EmployeeDB();
 
     // Constructor
-    public ProposalContent() {
+    public ProposalContent() throws IOException {
         super("GESTIÓN DE PROPUESTAS");
     }
 
@@ -48,10 +49,10 @@ public class ProposalContent extends ContentWindow {
      * Método que permite personalizar el contenido del apartado de empleados
      */
     @Override
-    protected void putContentModule() {
+    protected void putContentModule() throws IOException {
         module = new JPanel();
         module.setLayout(new GridLayout(2,1));
-        module.setBackground(DYE.getCONTENT());
+        module.setBackground(DYE.getSECONDARY());
 
         this.putManagementPanel();
         this.putTablesPanel();
@@ -62,11 +63,11 @@ public class ProposalContent extends ContentWindow {
     /**
      * Añade un panel con una serie de botones y un formulario
      */
-    private void putManagementPanel() {
+    private void putManagementPanel() throws IOException {
         management = new JPanel();
         management.setLayout(new BorderLayout());
         management.setBorder(new EmptyBorder(0,50,0,0));
-        management.setBackground(DYE.getCONTENT());
+        management.setBackground(DYE.getSECONDARY());
 
         this.putManagementButtons();
         this.putForm();
@@ -77,9 +78,9 @@ public class ProposalContent extends ContentWindow {
     /**
      * Añade un formulario con labels e inputs
      */
-    private void putForm() {
+    private void putForm() throws IOException {
         JPanel form = new JPanel();
-        form.setBackground(DYE.getCONTENT());
+        form.setBackground(DYE.getSECONDARY());
         form.setLayout(new GridLayout(4,1));
         form.setBorder(new EmptyBorder(20,50,20,100)); // Top, left, bottom, right
 
@@ -101,11 +102,11 @@ public class ProposalContent extends ContentWindow {
      * Permite mostrar un panel con un Label y un Combobox de Entidades
      * @return devuelve un JPanel con los componentes asignados
      */
-    private JPanel putCombobox() {
+    private JPanel putCombobox() throws IOException {
         JPanel comboPanel = new JPanel();
         comboPanel.setBorder(new EmptyBorder(20,75,20,297)); // Top, left, bottom, right
         comboPanel.setLayout(new BoxLayout(comboPanel, BoxLayout.Y_AXIS));
-        comboPanel.setBackground(DYE.getCONTENT());
+        comboPanel.setBackground(DYE.getSECONDARY());
 
         // Combobox
         JLabel lbEntity = new JLabel("Entidad");
@@ -124,11 +125,11 @@ public class ProposalContent extends ContentWindow {
     /**
      * Añade los botones de la parte izquierda que permiten realizar toda la gestión de propuestas
      */
-    private void putManagementButtons() {
+    private void putManagementButtons() throws IOException {
         JPanel mButtonsProposal = new JPanel();
         mButtonsProposal.setLayout(new BoxLayout(mButtonsProposal, BoxLayout.Y_AXIS));
         mButtonsProposal.setBorder(new EmptyBorder(110,50,0,0)); // Top, left, bottom, right
-        mButtonsProposal.setBackground(DYE.getCONTENT());
+        mButtonsProposal.setBackground(DYE.getSECONDARY());
 
         // Botón Crear
         ImageButton btnCreate = new ImageButton("img/create.png", "CREAR");
@@ -191,7 +192,7 @@ public class ProposalContent extends ContentWindow {
         management.add(mButtonsProposal, BorderLayout.WEST);
     }
 
-    private void putTablesPanel() {
+    private void putTablesPanel() throws IOException {
         tablePanel = new JPanel();
         tablePanel.setLayout(new BorderLayout());
 
@@ -203,11 +204,11 @@ public class ProposalContent extends ContentWindow {
     /**
      * Añade una tabla y su configuración al panel actual
      */
-    private void putProposalTable() {
+    private void putProposalTable() throws IOException {
         String[] titulos = {"Título", "Descripción", "Fecha Inicio", "Entidad"};
 
         JPanel proposalPanelTable = new JPanel(new BorderLayout());
-        proposalPanelTable.setBackground(DYE.getCONTENT());
+        proposalPanelTable.setBackground(DYE.getSECONDARY());
 
         // Tabla
         JScrollPane scrollPane = new JScrollPane();

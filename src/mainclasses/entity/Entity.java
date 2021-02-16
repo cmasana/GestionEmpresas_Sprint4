@@ -3,7 +3,7 @@ package mainclasses.entity;
 /**
  * Grupo Individual Sprint 3 2020-2021
  * @author Carlos Masana
- * Clase entidad: Implementa métodos comunes en clases Company y School
+ * Clase entidad: Implementa atributos y métodos comunes en clases Company y School
  */
 
  public abstract class Entity {

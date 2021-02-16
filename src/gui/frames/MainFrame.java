@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -30,14 +31,14 @@ public class MainFrame extends JFrame {
     /**
      * Crea un objeto de la clase MainWindow
      */
-    public MainFrame() {
+    public MainFrame() throws IOException {
         this.initComponents();
     }
 
     /**
      * Permite inicializar todos los componentes de nuestra ventana
      */
-    private void initComponents() {
+    private void initComponents() throws IOException {
         // Cargamos configuración de la ventana
         this.windowSettings();
 
@@ -65,10 +66,10 @@ public class MainFrame extends JFrame {
     /**
      * Añade la barra lateral, su configuración y sus respectivos componentes
      */
-    private void putSidebar() {
+    private void putSidebar() throws IOException {
         // Configuración barra lateral
         sideBar.setPreferredSize(new Dimension(200,900)); // Establecer un tamaño por defecto
-        sideBar.setBackground(DYE.getSIDEBAR());
+        sideBar.setBackground(DYE.getMAIN());
 
         // Cargamos componentes de la barra lateral
         this.sbLogo();
@@ -92,20 +93,20 @@ public class MainFrame extends JFrame {
     /**
      * Permite añadir un título a la barra lateral
      */
-    private void sbBrand() {
+    private void sbBrand() throws IOException {
         JLabel appTitle = new JLabel("PROIECTUS");
         appTitle.setBorder(new EmptyBorder(0,0,150,0)); // Top, left, bottom, right
         appTitle.setFont(new Font("Open Sans", Font.BOLD, 26)); // Fuente del texto
-        appTitle.setForeground(DYE.getTEXTNORMAL()); // Color de texto
+        appTitle.setForeground(DYE.getTXTMAIN()); // Color de texto
         sideBar.add(appTitle);
     }
 
     /**
      * Permite añadir el bloque de contenido a la ventana principal
      */
-    private void putContent() {
+    private void putContent() throws IOException {
         content.setPreferredSize(new Dimension(1400,900));
-        content.setBackground(DYE.getCONTENT());
+        content.setBackground(DYE.getSECONDARY());
 
         // Añadimos paneles que mostrarán el contenido, dependiendo del botón al que hagamos clic
         content.add(eContent);
@@ -122,7 +123,7 @@ public class MainFrame extends JFrame {
     /**
      * Permite añadir una serie de botones a la barra lateral con sus respectivas acciones al hacer clic
      */
-    private void sbButtons() {
+    private void sbButtons() throws IOException {
         SidebarButton employeeBtn = new SidebarButton("Empleados");
         employeeBtn.addActionListener(new ActionListener() {
             @Override
@@ -147,9 +148,9 @@ public class MainFrame extends JFrame {
     /**
      * Permite añadir un espacio vacío a la ventana (con fines meramente estéticos)
      */
-    private void putEmptySpace() {
+    private void putEmptySpace() throws IOException {
         emptySpace.setPreferredSize(new Dimension(1600, 1));
-        emptySpace.setBackground(DYE.getTEXTNORMAL());
+        emptySpace.setBackground(DYE.getTXTMAIN());
         this.add(emptySpace, BorderLayout.SOUTH);
     }
 }

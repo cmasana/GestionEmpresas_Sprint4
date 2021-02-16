@@ -1,66 +1,84 @@
 package custom_ui.colors;
 
+import auxiliar.ReadConfig;
+
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
- * Permite obtener los colores de nuestra paleta personalizada
+ * Permite obtener los colores de nuestra aplicación
  * @author cmasana
  */
 public class ColorsPalette {
-    // Colores para contenedores de la app
-    private final Color SIDEBAR = new Color(240,165,0);
-    private final Color CONTENT = new Color(244,244,244);
 
-    // Colores de fondo para botones (SideBar)
-    private final Color NORMAL = new Color(240,165,0);
+    // Colores predeterminados
+    private final Color MAIN = new Color(240,165,0);
+    private final Color SECONDARY = new Color(244,244,244);
     private final Color HOVER = new Color(207,117,0);
+    private final Color TXTMAIN = new Color(26,28,32);
+    private final Color TXTHOVER = new Color(244,244,244);
+    private final Color TXTPRESSED = new Color(207, 117,0);
+    private final Color TXTRELEASED = new Color(244,244,244);
 
-    // Colores para texto de botones (SideBar)
-    private final Color TEXTHOVER = new Color(244,244,244);
-    private final Color TEXTNORMAL = new Color(26,28,32);
-    private final Color TEXTPRESSED = new Color(207, 117,0);
-    private final Color TEXTRELEASED = new Color(244,244,244);
-
-    // Colores tema diferente
-    private final Color GZSIDEBAR = new Color(117,216,254);
-    private final Color GZCONTENT = new Color(255,255,255);
-    private final Color GZMAINBTN = new Color(117,216,254);
-    private final Color GZHOVERBTN = new Color(40,156,199);
-    private final Color GZTEXTHOVER = new Color(255,255,255);
-    private final Color GZTEXTNORMAL = new Color(26,28,32);
-    private final Color GZTEXTPRESSED = new Color(40,156,199);
-    private final Color GZTEXTRELEASED = new Color(255,255,255);
 
     // Getters
-    public Color getSIDEBAR() {
-        return SIDEBAR;
+    public Color getMAIN() throws IOException {
+        return getRgbColor(MAIN, "color_main");
     }
 
-    public Color getCONTENT() {
-        return CONTENT;
+    public Color getSECONDARY() throws IOException {
+        return getRgbColor(SECONDARY, "color_secondary");
     }
 
-    public Color getHOVER() {
-        return HOVER;
+    public Color getHOVER() throws IOException {
+        return getRgbColor(HOVER, "color_hover");
     }
 
-    public Color getTEXTNORMAL() {
-        return TEXTNORMAL;
+    public Color getTXTMAIN() throws IOException {
+        return getRgbColor(TXTMAIN, "color_txt_main");
     }
 
-    public Color getNORMAL() {
-        return NORMAL;
+    public Color getTXTHOVER() throws IOException {
+        return getRgbColor(TXTHOVER, "color_txt_hover");
     }
 
-    public Color getTEXTHOVER() {
-        return TEXTHOVER;
+    public Color getTXTPRESSED() throws IOException {
+        return getRgbColor(TXTPRESSED, "color_txt_pressed");
     }
 
-    public Color getTEXTPRESSED() {
-        return TEXTPRESSED;
+    public Color getTXTRELEASED() throws IOException {
+        return getRgbColor(TXTRELEASED, "color_txt_released");
     }
 
-    public Color getTEXTRELEASED() {
-        return TEXTRELEASED;
+    /**
+     * Devuelve un color
+     * @param predeterminado color predeterminado por si no existiera archivo de configuración
+     * @param optionLine línea de la que queremos extraer el valor de color
+     * @return devuelve un color, ya sea el predeterminado o el personalizado
+     * @throws IOException excepción de entrada/salida
+     */
+    private Color getRgbColor(Color predeterminado, String optionLine) throws IOException {
+        // Archivo de configuración
+        File myCfg = new File("./cfg.properties");
+
+        // Si existe archivo de configuración cargamos el color indicado
+        if (myCfg.exists()) {
+            String option = ReadConfig.loadCfg(myCfg.getPath(), optionLine);
+            return this.hexToColor(option);
+        } else {
+            // Si no, cargamos el color predeterminado
+            return predeterminado;
+        }
     }
+
+    /**
+     * Permite obtener un color desde un String con formato hexadecimal
+     * @param color string con el valor en hexadecimal de un determinado color
+     * @return devuelve un Color con formato RGB
+     */
+    private Color hexToColor(String color) {
+        return Color.decode(color);
+    }
+
 }

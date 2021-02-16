@@ -1,5 +1,10 @@
 package validations;
 
+/**
+ * Clase que permite validar que un NSS introducido sea correcto
+ *
+ * @author cmasana
+ */
 public class ValidadorNSS {
 
     public static boolean validar(String nss) {
@@ -8,13 +13,13 @@ public class ValidadorNSS {
         if(nss.length() != 12) {
             return false;
         }
-
-        // Validamos que sólo tengo 12 dígitos y que la ID de provincia y el DC son correctos
-        if(soloNumeros(nss) && digitosProvincia(nss) && digitosControl(nss).equals(nss.substring(10))) {
-            return true;
-        }
         else {
-            return false;
+            // Validamos que sólo tengo 12 dígitos y que la ID de provincia y el DC son correctos
+            if (soloNumeros(nss) && digitosProvincia(nss) && digitosControl(nss).equals(nss.substring(10))) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

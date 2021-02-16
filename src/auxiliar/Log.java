@@ -1,4 +1,4 @@
-package mainclasses.io;
+package auxiliar;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -6,13 +6,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-
-public class Error {
+/**
+ * Permite crear un archivo Log con todos los registros de creación, modificación y eliminación de empleados
+ * y propuestas
+ */
+public class Log {
 
     private BufferedWriter buffered;
     private final String path; // Ruta del archivo
 
-    public Error(String path, boolean append) throws IOException {
+    public Log(String path, boolean append) throws IOException {
         this.path = path;
         this.open(append);
     }
@@ -58,17 +61,6 @@ public class Error {
     // Cerramos buffer
     private void close() throws IOException {
         this.buffered.close();
-    }
-
-    // Captura un error y lo escribe dentro del archivo correspondiente
-    public void capturarError(Error myError, String alerta) {
-        try {
-            myError.addLine(alerta, true); // TRUE para que no sobreescriba
-
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-
     }
 
 }

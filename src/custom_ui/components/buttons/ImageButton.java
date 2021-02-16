@@ -7,6 +7,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Objects;
 
 public class ImageButton extends JButton implements MouseListener {
@@ -16,29 +17,29 @@ public class ImageButton extends JButton implements MouseListener {
     // Panel botones
     JPanel panelBG;
 
-    public ImageButton() {
+    public ImageButton() throws IOException {
         this.initComponent();
         this.putImage("", "");
     }
 
-    public ImageButton(String pathImage, String btnLabel) {
+    public ImageButton(String pathImage, String btnLabel) throws IOException {
         this.initComponent();
         this.putImage(pathImage, btnLabel);
     }
 
-    private void initComponent() {
-        this.setBorder(new MatteBorder(1,1,1,1, DYE.getTEXTNORMAL()));
+    private void initComponent() throws IOException {
+        this.setBorder(new MatteBorder(1,1,1,1, DYE.getTXTMAIN()));
         this.setOpaque(true); // Opacidad
-        this.setBackground(DYE.getSIDEBAR()); // Color de fondo
+        this.setBackground(DYE.getMAIN()); // Color de fondo
         this.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambiar a cursor de mano
         this.setFocusable(false); // Quitar bordes alrededor de texto
         addMouseListener(this); // Añadir los eventos de ratón
     }
 
-    private void putImage(String pathImage, String btnLabel) {
+    private void putImage(String pathImage, String btnLabel) throws IOException {
         panelBG = new JPanel();
         panelBG.setLayout(new FlowLayout());
-        panelBG.setBackground(DYE.getSIDEBAR());
+        panelBG.setBackground(DYE.getMAIN());
 
         JLabel image;
         image = new JLabel(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(pathImage))));
@@ -70,11 +71,19 @@ public class ImageButton extends JButton implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        panelBG.setBackground(DYE.getHOVER());
+        try {
+            panelBG.setBackground(DYE.getHOVER());
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        panelBG.setBackground(DYE.getNORMAL());
+        try {
+            panelBG.setBackground(DYE.getMAIN());
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 }

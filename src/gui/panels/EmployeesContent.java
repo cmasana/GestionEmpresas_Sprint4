@@ -12,7 +12,11 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+/**
+ * Permite crear el panel que muestra la parte de Gestión de empleados
+ */
 public class EmployeesContent extends ContentWindow {
 
     // Paneles
@@ -29,7 +33,7 @@ public class EmployeesContent extends ContentWindow {
     private static JTable userTable;
 
     // Constructor
-    public EmployeesContent() {
+    public EmployeesContent() throws IOException {
         super("GESTIÓN DE EMPLEADOS");
     }
 
@@ -37,10 +41,10 @@ public class EmployeesContent extends ContentWindow {
      * Método que permite personalizar el contenido del apartado de empleados
      */
     @Override
-    protected void putContentModule() {
+    protected void putContentModule() throws IOException {
         module = new JPanel();
         module.setLayout(new GridLayout(2,1));
-        module.setBackground(DYE.getCONTENT());
+        module.setBackground(DYE.getSECONDARY());
 
         this.putManagementPanel();
 
@@ -52,7 +56,7 @@ public class EmployeesContent extends ContentWindow {
     /**
      * Añade un panel con una serie de botones y un formulario
      */
-    private void putManagementPanel() {
+    private void putManagementPanel() throws IOException {
         management = new JPanel();
         management.setLayout(new BorderLayout());
         this.putManagementButtons();
@@ -64,9 +68,9 @@ public class EmployeesContent extends ContentWindow {
     /**
      * Añade un formulario con labels e inputs
      */
-    private void putForm() {
+    private void putForm() throws IOException {
         JPanel form = new JPanel();
-        form.setBackground(DYE.getCONTENT());
+        form.setBackground(DYE.getSECONDARY());
         form.setLayout(new GridLayout(4, 1));
         form.setBorder(new EmptyBorder(20,50,20,100)); // Top, left, bottom, right
 
@@ -88,12 +92,12 @@ public class EmployeesContent extends ContentWindow {
     /**
      * Añade los botones de la parte superior que permiten realizar toda la gestión de empleados
      */
-    private void putManagementButtons() {
+    private void putManagementButtons() throws IOException {
 
         JPanel mButtonsEmployee = new JPanel();
         mButtonsEmployee.setLayout(new BoxLayout(mButtonsEmployee, BoxLayout.Y_AXIS));
         mButtonsEmployee.setBorder(new EmptyBorder(110,100,10,0)); // Top, left, bottom, right
-        mButtonsEmployee.setBackground(DYE.getCONTENT());
+        mButtonsEmployee.setBackground(DYE.getSECONDARY());
 
         // Botón Crear
         ImageButton btnCreate = new ImageButton("img/create.png", "CREAR");
@@ -161,9 +165,9 @@ public class EmployeesContent extends ContentWindow {
     /**
      * Añade una tabla y su configuración a la interfaz
      */
-    private void putUserListTable() {
+    private void putUserListTable() throws IOException {
         JPanel panelTable = new JPanel(new BorderLayout());
-        panelTable.setBackground(DYE.getCONTENT());
+        panelTable.setBackground(DYE.getSECONDARY());
 
         // Tabla
         JScrollPane scrollPane = new JScrollPane();

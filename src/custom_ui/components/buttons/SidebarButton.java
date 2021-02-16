@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 /**
  * Clase SidebarButton: Define las características de los botones de la barra lateral izquierda
@@ -16,13 +17,13 @@ public class SidebarButton extends JButton implements MouseListener {
     private final ColorsPalette DYE = new ColorsPalette();
 
     // Constructor vacío
-    public SidebarButton() {
+    public SidebarButton() throws IOException {
         this.setBorder(null); // Sin bordes
         this.setContentAreaFilled(false); // Botón transparente
         this.setOpaque(true); // Opacidad
         this.setFont(new Font("Open Sans", Font.BOLD, 14)); // Fuente botón
         this.setBackground(null); // Color de fondo
-        this.setForeground(DYE.getTEXTNORMAL()); // Color letra
+        this.setForeground(DYE.getTXTMAIN()); // Color letra
         this.setPreferredSize(new Dimension(200, 40));
         this.setSize(200, 40);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambiar a cursor de mano
@@ -31,13 +32,13 @@ public class SidebarButton extends JButton implements MouseListener {
     }
 
     // Constructor sobrecargado
-    public SidebarButton(String title) {
+    public SidebarButton(String title) throws IOException {
         this.setBorder(null); // Sin bordes
         this.setContentAreaFilled(false); // Botón transparente
         this.setOpaque(true); // Opacidad
         this.setFont(new Font("Open Sans", Font.BOLD, 14)); // Fuente botón
         this.setBackground(null); // Color de fondo
-        this.setForeground(DYE.getTEXTNORMAL()); // Color letra
+        this.setForeground(DYE.getTXTMAIN()); // Color letra
         this.setPreferredSize(new Dimension(200, 40));
         this.setSize(200, 40);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambiar a cursor de mano
@@ -64,7 +65,11 @@ public class SidebarButton extends JButton implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        this.setForeground(DYE.getTEXTPRESSED());
+        try {
+            this.setForeground(DYE.getTXTPRESSED());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -73,7 +78,11 @@ public class SidebarButton extends JButton implements MouseListener {
      */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        this.setForeground(DYE.getTEXTRELEASED());
+        try {
+            this.setForeground(DYE.getTXTRELEASED());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -82,8 +91,12 @@ public class SidebarButton extends JButton implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-        this.setBackground(DYE.getHOVER());
-        this.setForeground(DYE.getTEXTHOVER());
+        try {
+            this.setBackground(DYE.getHOVER());
+            this.setForeground(DYE.getTXTHOVER());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -92,8 +105,12 @@ public class SidebarButton extends JButton implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-        this.setBackground(DYE.getNORMAL());
-        this.setForeground(DYE.getTEXTNORMAL());
+        try {
+            this.setBackground(DYE.getMAIN());
+            this.setForeground(DYE.getTXTMAIN());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

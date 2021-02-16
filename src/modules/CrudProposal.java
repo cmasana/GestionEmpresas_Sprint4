@@ -1,10 +1,12 @@
 package modules;
 
+import auxiliar.CustomException;
+import auxiliar.InputOutput;
+import auxiliar.Log;
 import custom_ui.tables.*;
 import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
-import mainclasses.io.*;
-import mainclasses.io.Error;
+import auxiliar.Error;
 import mainclasses.proposal.Proposal;
 
 import javax.swing.*;

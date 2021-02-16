@@ -15,10 +15,10 @@ public  class EntityDB {
     // Constructor vacío
     public EntityDB() {
         lista = new Entity[4];
-        lista[0] = new School("IES Montsià", "Amposta", 977123456, "TGN123");
-        lista[1] = new School("IES Blanco Amor", "Ourense", 988123456, "GAL123");
-        lista[2] = new Company("Bonusan España SL", "Alicante", 966123456, "123456");
-        lista[3] = new Company("Cabreiroá SA", "Verín", 988456789, "345678");
+        lista[0] = new School("IES Montsià", "Amposta",977700043, "43006101");
+        lista[1] = new School("IES Eduardo Blanco Amor", "Ourense",988219843, "32008941");
+        lista[2] = new Company("Aluminis Jovi SL", "La Ràpita",977744089, "B43437276");
+        lista[3] = new Company("Cabreiroá SA", "Verín",988590015, "A32004194");
     }
 
     /**

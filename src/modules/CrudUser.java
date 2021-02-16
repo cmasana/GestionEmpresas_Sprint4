@@ -1,9 +1,11 @@
 package modules;
 
+import auxiliar.CustomException;
+import auxiliar.InputOutput;
+import auxiliar.Log;
 import custom_ui.tables.*;
 import mainclasses.database.EmployeeDB;
-import mainclasses.io.*;
-import mainclasses.io.Error;
+import auxiliar.Error;
 import mainclasses.user.Employee;
 import validations.*;
 

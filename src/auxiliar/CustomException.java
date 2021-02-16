@@ -1,5 +1,8 @@
-package mainclasses.io;
+package auxiliar;
 
+/**
+ * Permite crear Excepciones personalizadas y enviar su correspondiente mensaje de alerta
+ */
 public class CustomException extends Exception {
     // Código de error
     private final int errorId;

@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Permite añadir una fila a un formulario con un formato personalizado
@@ -17,7 +18,7 @@ public class RowForm extends JPanel {
     // Componentes
     private JTextField txtInput;
 
-    public RowForm(String labelTitle) {
+    public RowForm(String labelTitle) throws IOException {
         this.initComponent();
         this.setLabelTitle(labelTitle);
         this.setInputField();
@@ -26,10 +27,10 @@ public class RowForm extends JPanel {
     /**
      * Configuración predefinida para el componente
      */
-    private void initComponent() {
+    private void initComponent() throws IOException {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(new EmptyBorder(25, 75, 20, 300));
-        this.setBackground(DYE.getCONTENT());
+        this.setBackground(DYE.getSECONDARY());
     }
 
     /**
@@ -47,11 +48,11 @@ public class RowForm extends JPanel {
     /**
      * Añade un input para que el usuario introduzca datos
      */
-    private void setInputField(){
+    private void setInputField() throws IOException {
         txtInput = new JTextField(10);
         txtInput.setAlignmentX(Component.LEFT_ALIGNMENT);
         txtInput.setOpaque(false);
-        txtInput.setBorder(new MatteBorder(0, 0, 1, 0, DYE.getTEXTNORMAL()));
+        txtInput.setBorder(new MatteBorder(0, 0, 1, 0, DYE.getTXTMAIN()));
         this.add(txtInput);
     }
 
