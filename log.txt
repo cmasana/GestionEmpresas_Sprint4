@@ -1,0 +1,46 @@
+[17/02/2021 11:07:27] EMPLOYEE CREATE Carlos 44477074L 018888888812  019834
+[17/02/2021 11:07:56] PROPOSAL CREATE Título: Loquesea | Descripción: Descripción super elaborada | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:08:05] PROJECT CREATE Título: Loquesea | Descripción: Descripción super elaborada | Jefe de proyecto: Carlos
+[17/02/2021 11:08:05] PROPOSAL DELETE Título: Loquesea | Descripción: Descripción super elaborada | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:11:04] EMPLOYEE CREATE asdadsa 44477074L 018888888812  asdad
+[17/02/2021 11:11:14] PROPOSAL CREATE Título: asdasd | Descripción: asdadad | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:11:20] PROJECT CREATE Título: asdasd | Descripción: asdadad | Jefe de proyecto: asdadsa
+[17/02/2021 11:11:20] PROPOSAL DELETE Título: asdasd | Descripción: asdadad | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:15:44] EMPLOYEE CREATE Carlos 44477074L 018888888812  asdadad
+[17/02/2021 11:15:52] PROPOSAL CREATE Título: asdada | Descripción: asdsadsadsa | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:15:56] PROJECT CREATE Título: asdada | Descripción: asdsadsadsa | Jefe de proyecto: Carlos
+[17/02/2021 11:15:56] PROPOSAL DELETE Título: asdada | Descripción: asdsadsadsa | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:18:41] EMPLOYEE CREATE asdad 44477074L 018888888812  asda
+[17/02/2021 11:18:50] PROPOSAL CREATE Título: asdasd | Descripción: asdasda | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:18:55] PROJECT CREATE Título: asdasd | Descripción: asdasda | Jefe de proyecto: asdad
+[17/02/2021 11:18:55] PROPOSAL DELETE Título: asdasd | Descripción: asdasda | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:19:38] PROPOSAL CREATE Título: asdasda | Descripción: dasdasdasd | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:19:46] PROJECT CREATE Título: asdasda | Descripción: dasdasdasd | Jefe de proyecto: asdad
+[17/02/2021 11:19:46] PROPOSAL DELETE Título: asdasda | Descripción: dasdasdasd | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:22:09] EMPLOYEE CREATE Carlos 44477074L 018888888812  asda
+[17/02/2021 11:22:24] PROPOSAL CREATE Título: asdasda | Descripción: asdasd | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:22:48] PROJECT CREATE Título: asdasda | Descripción: asdasd | Jefe de proyecto: Carlos
+[17/02/2021 11:22:48] PROPOSAL DELETE Título: asdasda | Descripción: asdasd | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:23:37] EMPLOYEE CREATE carlos 44477074L 018888888812  asdaasd
+[17/02/2021 11:24:08] PROPOSAL CREATE Título: loquesea | Descripción: asdasda | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:24:21] PROJECT CREATE Título: loquesea | Descripción: asdasda | Jefe de proyecto: carlos
+[17/02/2021 11:24:21] PROPOSAL DELETE Título: loquesea | Descripción: asdasda | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:25:11] PROPOSAL CREATE Título: asdsad | Descripción: asdasd | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:25:23] PROPOSAL CREATE Título: asdasdas | Descripción: dasdsada | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:25:46] EMPLOYEE CREATE Carlos 44477074L 018888888812  asdadsad
+[17/02/2021 11:26:01] PROJECT CREATE Título: asdasdas | Descripción: dasdsada | Jefe de proyecto: Carlos
+[17/02/2021 11:26:01] PROPOSAL DELETE Título: asdasdas | Descripción: dasdsada | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:26:05] PROJECT CREATE Título: asdsad | Descripción: asdasd | Jefe de proyecto: Carlos
+[17/02/2021 11:26:05] PROPOSAL DELETE Título: asdsad | Descripción: asdasd | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Montsià | 
+[17/02/2021 11:30:51] EMPLOYEE CREATE Carlos 44477074L 018888888812  asdasd
+[17/02/2021 11:31:02] PROPOSAL CREATE Título: asdad | Descripción: asdasda | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:31:09] PROJECT CREATE Título: asdad | Descripción: asdasda | Jefe de proyecto: Carlos
+[17/02/2021 11:31:09] PROPOSAL DELETE Título: asdad | Descripción: asdasda | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:40:43] EMPLOYEE CREATE Carlos 44477074L 018888888812  MAS01
+[17/02/2021 11:41:04] PROPOSAL CREATE Título: Loquesea | Descripción: asdasdada | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:41:13] PROJECT CREATE Título: Loquesea | Descripción: asdasdada | Jefe de proyecto: Carlos
+[17/02/2021 11:41:13] PROPOSAL DELETE Título: Loquesea | Descripción: asdasdada | Fecha de inicio: Thu Oct 10 00:00:00 CET 1000 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:47:43] EMPLOYEE CREATE Carlos 12345678Z 018888888812  PARVO128
+[17/02/2021 11:48:10] PROPOSAL CREATE Título: Loquesea | Descripción: Super elaborada | Fecha de inicio: Thu Feb 17 00:00:00 CET 2022 | Entidad asociada: IES Eduardo Blanco Amor | 
+[17/02/2021 11:48:23] PROJECT CREATE Título: Loquesea | Descripción: Super elaborada | Jefe de proyecto: Carlos
+[17/02/2021 11:48:23] PROPOSAL DELETE Título: Loquesea | Descripción: Super elaborada | Fecha de inicio: Thu Feb 17 00:00:00 CET 2022 | Entidad asociada: IES Eduardo Blanco Amor | 

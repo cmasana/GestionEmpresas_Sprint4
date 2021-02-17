@@ -10,6 +10,9 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * Muestra un panel para la creación de proyectos
+ */
 public class ProjectDialog extends JPanel {
     private JTextField txtTitle;
     private JTextField txtDescription;

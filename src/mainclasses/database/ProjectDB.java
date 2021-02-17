@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class ProjectDB {
     // ArrayList que simula la base de datos
-    private final ArrayList<Project> listaProyectos;
+    private static ArrayList<Project> listaProyectos;
 
     // Constructor vacío
     public ProjectDB() {

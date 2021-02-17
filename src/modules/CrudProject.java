@@ -7,6 +7,7 @@ import auxiliar.Log;
 import custom_ui.tables.CustomTableConfig;
 import custom_ui.tables.CustomTableModel;
 import gui.dialogs.ProjectDialog;
+import gui.dialogs.ShowProjects;
 import mainclasses.database.ProjectDB;
 import mainclasses.database.ProposalDB;
 import mainclasses.proposal.Project;
@@ -40,6 +41,8 @@ public class CrudProject {
 
     // Simula bbdd
     private final ProjectDB projectList = new ProjectDB();
+
+    // Crud de propuestas
     private final CrudProposal crudProposal = new CrudProposal();
 
     /**
@@ -105,9 +108,11 @@ public class CrudProject {
 
     /**
      * Muestra los datos actualizados en la tabla de proyectos
-     * @param projectTable tabla dónde se visualizan los proyectos creados
      */
-    public void showData(JTable projectTable) {
+    public void showData() throws IOException {
+        int resultado;
+
+        ShowProjects showProjects = new ShowProjects();
 
         // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
         String[][] tabla = new String[projectList.sizeProjectDB()][5];
@@ -117,11 +122,11 @@ public class CrudProject {
             // Datos de cada Proyecto
             tabla[i][0] = projectList.getProjectFromDB(i).getName();
             tabla[i][1] = projectList.getProjectFromDB(i).getDescription();
-            tabla[i][2] = projectList.getProjectFromDB(i).getManager().toString();
+            tabla[i][2] = projectList.getProjectFromDB(i).getManager().getName();
         }
 
         // Añade los datos al modelo
-        projectTable.setModel(new CustomTableModel(
+        showProjects.getProjectTable().setModel(new CustomTableModel(
                 tabla,
                 new String [] {
                         "Título", "Descripción", "Manager"
@@ -129,6 +134,9 @@ public class CrudProject {
         ));
 
         // Diseño de la tabla
-        CustomTableConfig.initConfig(projectTable);
+        CustomTableConfig.initConfig(showProjects.getProjectTable());
+
+        // Mostramos diálogo de confirmación
+        JOptionPane.showConfirmDialog(null, showProjects, "VER PROYECTOS", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 }

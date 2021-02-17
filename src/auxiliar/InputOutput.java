@@ -23,7 +23,7 @@ public class InputOutput {
      * @param message mensaje que se muestra por pantalla
      */
     public static void printAlert(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(null, message, "Error", 0);
     }
 
     /**

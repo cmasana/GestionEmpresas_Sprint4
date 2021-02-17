@@ -9,7 +9,6 @@ import custom_ui.tables.*;
 import mainclasses.database.EntityDB;
 import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
-import mainclasses.user.Employee;
 import modules.CrudProject;
 import modules.CrudProposal;
 
@@ -122,7 +121,7 @@ public class ProposalContent extends ContentWindow {
         lbEntity.setAlignmentX(Component.LEFT_ALIGNMENT);
         comboPanel.add(lbEntity);
 
-        cbEntity = new JComboBox<>(entityDB.getLista().toArray(new Entity[0]));
+        cbEntity = new JComboBox<>(entityDB.getLISTA().toArray(new Entity[0]));
         cbEntity.setAlignmentX(Component.LEFT_ALIGNMENT);
         comboPanel.add(cbEntity);
 
@@ -202,6 +201,25 @@ public class ProposalContent extends ContentWindow {
             }
         });
         mButtonsProposal.add(btnEmpty);
+
+        // Crea un espacio en blanco de separación
+        mButtonsProposal.add(Box.createRigidArea(new Dimension(0, 5)));
+
+        // Botón vaciar lista
+        ImageButton btnShow = new ImageButton("img/info.png", "VER PROYECTOS");
+        btnShow.setPreferredSize(new Dimension(150, 40));
+        btnShow.setMaximumSize(new Dimension(150, 40));
+        btnShow.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    crudProject.showData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        mButtonsProposal.add(btnShow);
 
         management.add(mButtonsProposal, BorderLayout.WEST);
     }

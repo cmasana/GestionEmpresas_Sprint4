@@ -18,7 +18,7 @@ public class CustomTableConfig {
         table.setRowHeight(30);
 
         // Columns Width
-        table.getColumnModel().getColumn(0).setMaxWidth(250);
+        table.getColumnModel().getColumn(0).setMaxWidth(200);
         table.getColumnModel().getColumn(0).setPreferredWidth(250);
         table.getColumnModel().getColumn(2).setMaxWidth(150);
         table.getColumnModel().getColumn(2).setPreferredWidth(150);
