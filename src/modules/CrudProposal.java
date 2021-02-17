@@ -58,7 +58,11 @@ public class CrudProposal {
                 throw new CustomException(1111);
 
             } else {
-                try {
+                // Si la fecha introducida es anterior a la actual
+                if (InputOutput.wrongDate(startDate)) {
+                    throw new CustomException(1117);
+
+                } else {
                     // Creamos objeto de la clase Proposal
                     Proposal prop = new Proposal(name, description, InputOutput.stringToDate(startDate), entity);
 
@@ -70,13 +74,6 @@ public class CrudProposal {
 
                     // Actualizamos los datos en la tabla
                     showData(proposalTable);
-
-                } catch (ParseException pe) {
-                    String alerta = "Error: Fecha con formato desconocido";
-                    InputOutput.printAlert(alerta);
-
-                    // Capturamos error para el registro
-                    myError.capturarError(myError, "PROPOSAL " + alerta);
                 }
             }
         } catch (CustomException ce) {
@@ -87,6 +84,12 @@ public class CrudProposal {
 
         } catch (IOException e) {
             InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        } catch (ParseException pe) {
+            String alerta = "Error: Fecha con formato desconocido";
+            InputOutput.printAlert(alerta);
+
+            // Capturamos error para el registro
+            myError.capturarError(myError, "PROPOSAL " + alerta);
         }
     }
 
@@ -203,30 +206,24 @@ public class CrudProposal {
                     if (name.isEmpty() || description.isEmpty() || startDate.isEmpty() || itemSelected == null) {
                         throw new CustomException(1111);
                     } else {
-                        try {
-                            proposalList.getProposalFromDB(selectedRow).setName(name);
-                            proposalList.getProposalFromDB(selectedRow).setDescription(description);
-                            proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
-                            proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
+                        // Si la fecha introducida es anterior a HOY
+                        if (InputOutput.wrongDate(startDate)) {
+                            throw new CustomException(1117);
+                        } else {
 
-                            // Añadimos la entrada al log
-                            myLog.addLine("PROPOSAL EDIT " + name + " "
-                                                                + description + " "
-                                                                + InputOutput.stringToDate(startDate) + "  "
-                                                                + itemSelected.toString(), true);
+                                proposalList.getProposalFromDB(selectedRow).setName(name);
+                                proposalList.getProposalFromDB(selectedRow).setDescription(description);
+                                proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
+                                proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
 
-                            // Actualizamos datos de la tabla
-                            showData(proposalTable);
+                                // Añadimos la entrada al log
+                                myLog.addLine("PROPOSAL EDIT " + name + " "
+                                        + description + " "
+                                        + InputOutput.stringToDate(startDate) + "  "
+                                        + itemSelected.toString(), true);
 
-                        } catch (ParseException pe) {
-                            String alerta = "Error: Fecha con formato desconocido";
-                            InputOutput.printAlert(alerta);
-
-                            // Capturamos error para el registro
-                            myError.capturarError(myError, "PROPOSAL " + alerta);
-
-                        } catch (IOException e) {
-                            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+                                // Actualizamos datos de la tabla
+                                showData(proposalTable);
                         }
                     }
                 }
@@ -236,6 +233,10 @@ public class CrudProposal {
 
             // Capturamos error para el registro
             myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+        } catch (ParseException e) {
+            InputOutput.printAlert("Error: La fecha introducida no es válida");
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema de entrada/salida");
         }
     }
 

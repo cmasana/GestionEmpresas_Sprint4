@@ -60,6 +60,23 @@ public class InputOutput {
     }
 
     /**
+     * Permite averiguar si la fecha introducida es correcta o no
+     * @param fecha Date que queremos comparar
+     * @return devuelve TRUE si la fecha es anterior o FALSE si es posterior
+     */
+    public static boolean wrongDate(String fecha) throws ParseException {
+        Date dFecha;
+        Date today = new Date();
+
+        dFecha = stringToDate(fecha);
+
+        if (dFecha.before(today)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Muestra un mensaje de confirmación cuando queremos eliminar un elemento
      * @return devuelve un entero, OK = 0
      */

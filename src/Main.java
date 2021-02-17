@@ -9,12 +9,17 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) {
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
                     JFrame frame = new MainFrame();
+
+                    // Icono aplicación
+                    Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("img/icon.png"));
+                    frame.setIconImage(icon);
+
+                    // Configuración básica
                     frame.setSize(1600,950); // Tamaño por defecto
                     frame.setMinimumSize(new Dimension(600, 600)); // Tamaño mínimo
                     frame.setLocationRelativeTo(null);

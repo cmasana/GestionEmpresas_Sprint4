@@ -40,6 +40,9 @@ public class CustomException extends Exception {
             case 1116:
                 alertMessage = "Error: No hay ninguna propuesta creada";
                 break;
+            case 1117:
+                alertMessage = "Error: La fecha introducida es anterior a la actual";
+                break;
         }
         return alertMessage;
     }
