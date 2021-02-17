@@ -1,33 +1,58 @@
 package modules;
 
-import mainclasses.database.EmployeeDB;
+import auxiliar.CustomException;
+import auxiliar.Error;
+import auxiliar.InputOutput;
+import auxiliar.Log;
+import custom_ui.tables.CustomTableConfig;
+import custom_ui.tables.CustomTableModel;
+import gui.dialogs.ProjectDialog;
 import mainclasses.database.ProjectDB;
 import mainclasses.database.ProposalDB;
 import mainclasses.proposal.Project;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.io.IOException;
 
 /**
  * Clase CrudProject: Implementa los métodos necesarios para realizar la gestión de proyectos
  */
 public class CrudProject {
-    // Array de tipo ProposalDB
-    private final static ProposalDB proposalList = new ProposalDB();
+    // Log y errores
+    private static Log myLog;
+    private static Error myError;
 
-    // Array de tipo EmpleadoDB
-    private final static EmployeeDB employeeList = new EmployeeDB();
+    static {
+        try {
+            myLog = new Log("./log.txt", true);
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+    }
 
-    // Array de tipo PropuestaDB
-    private final static ProjectDB projectList = new ProjectDB();
+    static {
+        try {
+            myError = new Error("./error.txt", true);
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
+    }
 
-    public static void createProject(JTable proposalTable, String title) {
-        JLabel lbProposal;
-        JLabel lbEmployee;
-        JTextField txtTitle;
+    // Simula bbdd
+    private final ProjectDB projectList = new ProjectDB();
+    private final CrudProposal crudProposal = new CrudProposal();
 
-        JPanel mainPanel;
+    /**
+     * Permite crear Proyectos
+     * @param proposalTable JTable con propuestas
+     * @param proposalList Objeto de la clase ProposalDB con la lista de propuestas
+     * @param title String con título de la propuesta
+     * @param description String con la descripción de la propuesta
+     * @throws IOException Excepción de entrada/salida
+     */
+    public void createProject(JTable proposalTable, ProposalDB proposalList, String title, String description) throws IOException, CustomException {
+        // Panel con formulario y comboBox
+        ProjectDialog projectDialog = new ProjectDialog(title, description);
 
         // Almacena un entero, necesario para Diálogo de confirmación
         int resultado;
@@ -35,34 +60,75 @@ public class CrudProject {
         // Fila seleccionada
         int selectedRow = proposalTable.getSelectedRow();
 
-        mainPanel = new JPanel(new GridLayout(0,1));
-        mainPanel.setBorder(new EmptyBorder(50,50,50,50));
+        try {
+            // Si no hay empleados creados
+            if (projectDialog.getCbEmployee() == null) {
+                throw new CustomException(1115);
 
-        lbProposal = new JLabel("Título Propuesta");
-        txtTitle = new JTextField(50);
-        txtTitle.setEditable(false);
-        txtTitle.setText(title);
+                // Si no hay filas seleccionadas en la tabla de propuestas
+            } else if (selectedRow < 0) {
+                throw new CustomException(1114);
+            }
+            else {
+                // Mostramos diálogo de confirmación
+                resultado = JOptionPane.showConfirmDialog(null, projectDialog, "CREAR PROYECTO", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                // No se puede utilizar un listener si utilizamos showxxxxDialog
+                if (resultado == 0) {
+                    // Si el resultado es 0, significa que el usuario ha hecho clic en OK.
+                    Project project = new Project(projectDialog.getTxtTitle(), projectDialog.getTxtDescription(), projectDialog.getCbEmployee());
 
-        // TO-DO: No me ha dado tiempo, queda sin hacer
-        lbEmployee = new JLabel("Jefe Proyecto");
-        JTable employeeTable = new JTable();
+                    // Añadimos proyecto
+                    projectList.addProject(project);
 
+                    // Añadimos la entrada al log
+                    myLog.addLine("PROJECT CREATE " + project.toString(), true);
 
-        // Añadimos componentes al panel principal
-        mainPanel.add(lbProposal);
-        mainPanel.add(txtTitle);
-        mainPanel.add(lbEmployee);
+                    // Añadimos la entrada, antes de eliminar la propuesta para obtener el valor de la fila seleccionada
+                    myLog.addLine("PROPOSAL DELETE " + proposalList.getProposalFromDB(selectedRow), true);
 
-        // Mostramos diálogo de confirmación
-        resultado = JOptionPane.showConfirmDialog(null, mainPanel, "Selecciona un jefe de proyecto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    // Al crear proyecto, eliminamos la propuesta
+                    proposalList.removeProposal(selectedRow);
 
-        // No se puede utilizar un listener si utilizamos showxxxxDialog
-        if (resultado == 0) {
-            // Si el resultado es 0, significa que el usuario ha hecho clic en OK. Guardamos el objeto de tipo Project
-            Project project = new Project(proposalList.getProposalFromDB(selectedRow).getName(), proposalList.getProposalFromDB(selectedRow).getDescription(), employeeList.getEmployeeFromDB(employeeTable.getSelectedRow()));
+                    // Refrescamos la tabla para eliminar la propuesta de ahí también
+                    crudProposal.showData(proposalTable);
+                }
+            }
+        } catch (CustomException ce) {
+            InputOutput.printAlert(ce.getMessage());
 
-            projectList.addProject(project);
+            // Capturamos error para el registro
+            myError.capturarError(myError, "PROJECT " + ce.getMessage());
         }
+    }
+
+
+    /**
+     * Muestra los datos actualizados en la tabla de proyectos
+     * @param projectTable tabla dónde se visualizan los proyectos creados
+     */
+    public void showData(JTable projectTable) {
+
+        // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
+        String[][] tabla = new String[projectList.sizeProjectDB()][5];
+
+        // Recorre la lista de Proyectos
+        for(int i = 0; i < projectList.sizeProjectDB(); i++) {
+            // Datos de cada Proyecto
+            tabla[i][0] = projectList.getProjectFromDB(i).getName();
+            tabla[i][1] = projectList.getProjectFromDB(i).getDescription();
+            tabla[i][2] = projectList.getProjectFromDB(i).getManager().toString();
+        }
+
+        // Añade los datos al modelo
+        projectTable.setModel(new CustomTableModel(
+                tabla,
+                new String [] {
+                        "Título", "Descripción", "Manager"
+                }
+        ));
+
+        // Diseño de la tabla
+        CustomTableConfig.initConfig(projectTable);
     }
 }

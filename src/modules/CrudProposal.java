@@ -40,7 +40,7 @@ public class CrudProposal {
     }
 
     // Array de tipo ProposalDB
-    private final static ProposalDB proposalList = new ProposalDB();
+    private final ProposalDB proposalList = new ProposalDB();
 
     /**
      * Permite crear propuestas
@@ -50,7 +50,7 @@ public class CrudProposal {
      * @param startDate fecha de la propuesta
      * @param entity entidad de la propuesta
      */
-    public static void createProposal(JTable proposalTable, String name, String description, String startDate, Entity entity) {
+    public void createProposal(JTable proposalTable, String name, String description, String startDate, Entity entity) {
 
         try {
             // Si hay algún campo vacío
@@ -95,7 +95,7 @@ public class CrudProposal {
      * Permite eliminar propuestas
      * @param proposalTable tabla donde se visualizan las propuestas
      */
-    public static void deleteProposal(JTable proposalTable) {
+    public void deleteProposal(JTable proposalTable) {
         // Almacena el resultado de un cuadro de alerta si es 0 se elimina el elemento
         int ok;
 
@@ -111,7 +111,7 @@ public class CrudProposal {
                 // Si el resultado es igual a 0, eliminamos la propuesta
                 if (ok == 0) {
                     // Añadimos la entrada al log
-                    myLog.addLine("EMPLOYEE DELETE " + proposalList.getProposalFromDB(row), true);
+                    myLog.addLine("PROPOSAL DELETE " + proposalList.getProposalFromDB(row), true);
 
                     // Eliminamos propuesta
                     proposalList.removeProposal(row);
@@ -139,7 +139,7 @@ public class CrudProposal {
      * Permite vaciar toda la lista de propuestas
      * @param proposalTable tabla donde se visualizan las propuestas creadas
      */
-    public static void emptyAll(JTable proposalTable) {
+    public void emptyAll(JTable proposalTable) {
         // Almacena un entero, si es 0 se eliminan todos los elementos
         int ok;
 
@@ -179,7 +179,7 @@ public class CrudProposal {
      * @param startDate fecha de la propuesta
      * @param cbEntity comboBox con la lista de entidades
      */
-    public static void editProposal(JTable proposalTable, String name, String description, String startDate , JComboBox<Entity> cbEntity) {
+    public void editProposal(JTable proposalTable, String name, String description, String startDate , JComboBox<Entity> cbEntity) {
 
         // Almacenamos el nº total de filas que hay en la tabla
         int totalRows = proposalTable.getRowCount();
@@ -243,7 +243,7 @@ public class CrudProposal {
      * Muestra los datos actualizados en la tabla de propuestas
      * @param proposalTable tabla dónde se visualizan las propuestas creadas
      */
-    public static void showData(JTable proposalTable) {
+    public void showData(JTable proposalTable) {
 
         // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
         String[][] tabla = new String[proposalList.sizeProposalDB()][5];

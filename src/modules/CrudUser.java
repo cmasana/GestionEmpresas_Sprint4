@@ -36,8 +36,8 @@ public class CrudUser {
         }
     }
 
-    // Array de tipo EmpleadoDB
-    private final static EmployeeDB employeeList = new EmployeeDB();
+    // EmployeeDB
+    private final EmployeeDB employeeList = new EmployeeDB();
 
 
     /**
@@ -49,7 +49,7 @@ public class CrudUser {
      * @param nss        nss del empleado
      * @param employeeId codigo del empleado
      */
-    public static void createUser(JTable userTable, String name, String dni, String nss, String employeeId) {
+    public void createUser(JTable userTable, String name, String dni, String nss, String employeeId) {
 
         try {
             // Si hay algún campo vacío
@@ -93,7 +93,7 @@ public class CrudUser {
      *
      * @param userTable tabla dónde se visualizan los empleados
      */
-    public static void deleteUser(JTable userTable) {
+    public void deleteUser(JTable userTable) {
         // Almacena el resultado de un cuadro de alerta si es 0 se elimina el elemento
         int resultado;
 
@@ -138,7 +138,7 @@ public class CrudUser {
      *
      * @param userTable tabla dónde se visualizan todos los empleados
      */
-    public static void emptyAll(JTable userTable) {
+    public void emptyAll(JTable userTable) {
         // Almacena un entero, si es 0 se eliminan todos los elementos
         int ok;
 
@@ -179,7 +179,7 @@ public class CrudUser {
      * @param nss        nss del empleado
      * @param employeeId codigo del empleado
      */
-    public static void editUser(JTable userTable, String name, String dni, String nss, String employeeId) {
+    public void editUser(JTable userTable, String name, String dni, String nss, String employeeId) {
 
         // Almacenamos el nº total de filas que hay en la tabla
         int totalRows = userTable.getRowCount();
@@ -238,7 +238,7 @@ public class CrudUser {
      *
      * @param userTable tabla dónde se visualizan los empleados creados
      */
-    public static void showData(JTable userTable) {
+    public void showData(JTable userTable) {
 
         // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
         String[][] tablaUsuarios = new String[employeeList.sizeEmployeeDB()][4];

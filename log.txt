@@ -1,6 +1,0 @@
-[12/02/2021 01:52:42] EMPLOYEE CREATE Carlos 44477074L 018888888812  asdasds
-[12/02/2021 01:52:55] EMPLOYEE CREATE Maria 44477074L 018888888812  asasdsadad
-[12/02/2021 01:53:33] PROPOSAL CREATE Título: asadsadad | Descripción: asdasdasdd | Fecha de inicio: Tue Dec 15 00:00:00 CET 1981 | Entidad asociada: IES Montsià | 
-[12/02/2021 01:53:40] PROPOSAL EDIT asadsadad asdasdasdd Tue Dec 15 00:00:00 CET 1981  Nombre: IES Montsià | Población: Amposta | Cod. Territorial: TGN123
-[16/02/2021 01:41:22] EMPLOYEE CREATE Carlos 44477074L 018888888812  PEPE123
-[16/02/2021 01:42:01] PROPOSAL CREATE Título: asdasd | Descripción: asdadsad | Fecha de inicio: Thu Oct 15 00:00:00 CET 1981 | Entidad asociada: IES Eduardo Blanco Amor | 

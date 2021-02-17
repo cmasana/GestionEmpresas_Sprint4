@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * Grupo Individual Sprint 3 2021 - Carlos Masana
  * Clase EmployeeDB: Simula una base de datos con usuarios de tipo Empleado
  */
-public  class EmployeeDB extends ArrayList<Employee> {
+public class EmployeeDB {
     // ArrayList que simula la base de datos de Empleados
-    private final ArrayList<Employee> listaEmpleados;
+    private static final ArrayList<Employee> listaEmpleados = new ArrayList<Employee>();
 
     // Constructor vacío
     public EmployeeDB() {
-        listaEmpleados  = new ArrayList<Employee>();
+
     }
 
     // Métodos para realizar operaciones básicas en nuestro ArrayList
@@ -50,6 +50,16 @@ public  class EmployeeDB extends ArrayList<Employee> {
     public int sizeEmployeeDB() {
         return listaEmpleados.size();
     }
+
+
+    /**
+     * Transforma ArrayList a array de Empleados
+     */
+    public Employee[] listEmployees() {
+        return listaEmpleados.toArray(new Employee[this.sizeEmployeeDB()]);
+    }
+
+
 
 }
 

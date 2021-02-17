@@ -30,7 +30,10 @@ public class EmployeesContent extends ContentWindow {
     private RowForm rowEmployeeId;
 
     // Tabla
-    private static JTable userTable;
+    private JTable userTable;
+
+    // Gestión de empleados
+    private final CrudUser crudUser = new CrudUser();
 
     // Constructor
     public EmployeesContent() throws IOException {
@@ -106,7 +109,8 @@ public class EmployeesContent extends ContentWindow {
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudUser.createUser(userTable, rowName.getTxtInput().getText(), rowDni.getTxtInput().getText(), rowNss.getTxtInput().getText(), rowEmployeeId.getTxtInput().getText());
+                crudUser.createUser(userTable, rowName.getTxtInput().getText(), rowDni.getTxtInput().getText(),
+                                    rowNss.getTxtInput().getText(), rowEmployeeId.getTxtInput().getText());
                 cleanInputs();
             }
         });
@@ -122,7 +126,7 @@ public class EmployeesContent extends ContentWindow {
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudUser.editUser(userTable, rowName.getTxtInput().getText(), rowDni.getTxtInput().getText(), rowNss.getTxtInput().getText(), rowEmployeeId.getTxtInput().getText());
+                crudUser.editUser(userTable, rowName.getTxtInput().getText(), rowDni.getTxtInput().getText(), rowNss.getTxtInput().getText(), rowEmployeeId.getTxtInput().getText());
             }
         });
         mButtonsEmployee.add(btnEdit);
@@ -137,7 +141,7 @@ public class EmployeesContent extends ContentWindow {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudUser.deleteUser(userTable);
+                crudUser.deleteUser(userTable);
             }
         });
         mButtonsEmployee.add(btnDelete);
@@ -152,7 +156,7 @@ public class EmployeesContent extends ContentWindow {
         btnEmpty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudUser.emptyAll(userTable);
+                crudUser.emptyAll(userTable);
             }
         });
         mButtonsEmployee.add(btnEmpty);

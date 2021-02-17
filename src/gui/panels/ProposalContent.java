@@ -1,12 +1,18 @@
 package gui.panels;
 
+
+import auxiliar.CustomException;
+import auxiliar.InputOutput;
 import custom_ui.components.buttons.ImageButton;
 import custom_ui.components.forms.*;
 import custom_ui.tables.*;
-import mainclasses.database.EmployeeDB;
 import mainclasses.database.EntityDB;
+import mainclasses.database.ProposalDB;
 import mainclasses.entity.Entity;
+import mainclasses.user.Employee;
+import modules.CrudProject;
 import modules.CrudProposal;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -29,16 +35,18 @@ public class ProposalContent extends ContentWindow {
     private RowForm rowStartDate;
 
     // ComboBox
-    private static JComboBox<Entity> cbEntity;
+    private JComboBox<Entity> cbEntity;
 
     // Tabla
     private JTable proposalTable;
 
-    // Simula una DB con las entidades
-    private final static EntityDB entityDB = new EntityDB();
+    // Simula las bbdd
+    private static final EntityDB entityDB = new EntityDB();
+    private final ProposalDB proposalDB = new ProposalDB();
 
-    // Simula una DB con los empleados
-    private final static EmployeeDB employeeDB = new EmployeeDB();
+    // Cruds
+    private final CrudProposal crudProposal = new CrudProposal();
+    private final CrudProject crudProject = new CrudProject();
 
     // Constructor
     public ProposalContent() throws IOException {
@@ -114,7 +122,7 @@ public class ProposalContent extends ContentWindow {
         lbEntity.setAlignmentX(Component.LEFT_ALIGNMENT);
         comboPanel.add(lbEntity);
 
-        cbEntity = new JComboBox<Entity>(entityDB.listEntities());
+        cbEntity = new JComboBox<>(entityDB.getLista().toArray(new Entity[0]));
         cbEntity.setAlignmentX(Component.LEFT_ALIGNMENT);
         comboPanel.add(cbEntity);
 
@@ -138,7 +146,7 @@ public class ProposalContent extends ContentWindow {
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudProposal.createProposal(proposalTable, rowTitle.getTxtInput().getText(), rowDescription.getTxtInput().getText(), rowStartDate.getTxtInput().getText(), (Entity) cbEntity.getSelectedItem());
+                crudProposal.createProposal(proposalTable, rowTitle.getTxtInput().getText(), rowDescription.getTxtInput().getText(), rowStartDate.getTxtInput().getText(), (Entity) cbEntity.getSelectedItem());
                 cleanInputs();
             }
         });
@@ -154,7 +162,7 @@ public class ProposalContent extends ContentWindow {
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudProposal.editProposal(proposalTable, rowTitle.getTxtInput().getText(), rowDescription.getTxtInput().getText(), rowStartDate.getTxtInput().getText(), cbEntity);
+                crudProposal.editProposal(proposalTable, rowTitle.getTxtInput().getText(), rowDescription.getTxtInput().getText(), rowStartDate.getTxtInput().getText(), cbEntity);
             }
         });
         mButtonsProposal.add(btnEdit);
@@ -169,22 +177,28 @@ public class ProposalContent extends ContentWindow {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudProposal.deleteProposal(proposalTable);
+                crudProposal.deleteProposal(proposalTable);
             }
         });
         mButtonsProposal.add(btnDelete);
 
         // Crea un espacio en blanco de separación
-        mButtonsProposal.add(Box.createRigidArea(new Dimension(0, 5)));
+        mButtonsProposal.add(Box.createRigidArea(new Dimension(0, 40)));
 
         // Botón vaciar lista
-        ImageButton btnEmpty = new ImageButton("img/empty.png", "VACIAR");
+        ImageButton btnEmpty = new ImageButton("img/empty.png", "CREAR PROYECTO");
         btnEmpty.setPreferredSize(new Dimension(150, 40));
         btnEmpty.setMaximumSize(new Dimension(150, 40));
         btnEmpty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                CrudProposal.emptyAll(proposalTable);
+                try {
+                    crudProject.createProject(proposalTable, proposalDB, rowTitle.getTxtInput().getText(), rowDescription.getTxtInput().getText());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (CustomException ce) {
+                    InputOutput.printAlert(ce.getMessage());
+                }
             }
         });
         mButtonsProposal.add(btnEmpty);

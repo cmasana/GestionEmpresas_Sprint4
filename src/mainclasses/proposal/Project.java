@@ -47,7 +47,7 @@ public class Project {
     public String toString() {
         return  "Título: " + name + " | " +
                 "Descripción: " + description + " | " +
-                "Jefe de proyecto: " + manager;
+                "Jefe de proyecto: " + manager.getName();
     }
 }
 
