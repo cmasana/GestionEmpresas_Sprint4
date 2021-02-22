@@ -15,6 +15,8 @@ import javax.swing.*;
  * Clase CrudUser: Implementa todos los métodos para la gestión de empleados
  */
 public class CrudUser {
+    // Simula bbdd
+    private final EmployeeDB employeeList = new EmployeeDB();
 
     /**
      * Permite crear un usuario y visualizarlo en tiempo real en su correspondiente tabla
@@ -44,7 +46,7 @@ public class CrudUser {
                     Employee emp = new Employee(name, dni, nss, employeeId);
 
                     // Lo añadimos al arraylist de tipo Empleado
-                    EmployeeDB.addEmployee(emp);
+                    employeeList.addEmployee(emp);
 
                     // Añadimos la entrada al log
                     Log.capturarRegistro("EMPLOYEE CREATE " + emp.toString());
@@ -82,10 +84,10 @@ public class CrudUser {
                 if (resultado == 0) {
 
                     // Añadimos la entrada al log
-                    Log.capturarRegistro("EMPLOYEE DELETE " + EmployeeDB.getEmployeeFromDB(row));
+                    Log.capturarRegistro("EMPLOYEE DELETE " + employeeList.getEmployeeFromDB(row));
 
                     // Eliminamos empleado
-                    EmployeeDB.removeEmployee(row);
+                    employeeList.removeEmployee(row);
 
                     // Actualizamos datos de la tabla
                     showData(userTable);
@@ -123,7 +125,7 @@ public class CrudUser {
                 if (ok == 0) {
                     // Recorremos el arrayList y eliminamos 1 a 1 los registros
                     for (int i = (totalrows - 1); i >= 0; i--) {
-                        EmployeeDB.removeEmployee(i);
+                        employeeList.removeEmployee(i);
                     }
 
                     // Actualizamos los datos de la tabla
@@ -177,10 +179,10 @@ public class CrudUser {
                             throw new CustomException(1113);
 
                         } else {
-                            EmployeeDB.getEmployeeFromDB(selectedRow).setName(name);
-                            EmployeeDB.getEmployeeFromDB(selectedRow).setDni(dni);
-                            EmployeeDB.getEmployeeFromDB(selectedRow).setNss(nss);
-                            EmployeeDB.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
+                            employeeList.getEmployeeFromDB(selectedRow).setName(name);
+                            employeeList.getEmployeeFromDB(selectedRow).setDni(dni);
+                            employeeList.getEmployeeFromDB(selectedRow).setNss(nss);
+                            employeeList.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
 
                             // Añadimos la entrada al log
                             Log.capturarRegistro("EMPLOYEE EDIT " + name + " " + dni + " "
@@ -208,16 +210,16 @@ public class CrudUser {
     public void showData(JTable userTable) {
 
         // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
-        String[][] tablaUsuarios = new String[EmployeeDB.sizeEmployeeDB()][4];
+        String[][] tablaUsuarios = new String[employeeList.sizeEmployeeDB()][4];
 
         // Recorre la lista de Empleados
-        for (int i = 0; i < EmployeeDB.sizeEmployeeDB(); i++) {
+        for (int i = 0; i < employeeList.sizeEmployeeDB(); i++) {
 
             // Datos de cada Empleado
-            tablaUsuarios[i][0] = EmployeeDB.getEmployeeFromDB(i).getName();
-            tablaUsuarios[i][1] = EmployeeDB.getEmployeeFromDB(i).getDni();
-            tablaUsuarios[i][2] = EmployeeDB.getEmployeeFromDB(i).getNss();
-            tablaUsuarios[i][3] = EmployeeDB.getEmployeeFromDB(i).getEmployeeId();
+            tablaUsuarios[i][0] = employeeList.getEmployeeFromDB(i).getName();
+            tablaUsuarios[i][1] = employeeList.getEmployeeFromDB(i).getDni();
+            tablaUsuarios[i][2] = employeeList.getEmployeeFromDB(i).getNss();
+            tablaUsuarios[i][3] = employeeList.getEmployeeFromDB(i).getEmployeeId();
         }
 
         // Añade los datos al modelo

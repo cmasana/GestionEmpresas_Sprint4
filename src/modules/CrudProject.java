@@ -47,14 +47,13 @@ public class CrudProject {
 
         try {
             // Si no hay empleados creados
-            if (projectDialog.getCbEmployee() == null) {
-                throw new CustomException(1115);
+           if (projectDialog.getCbEmployee() == null) {
+               throw new CustomException(1115);
 
                 // Si no hay filas seleccionadas en la tabla de propuestas
-            } else if (selectedRow < 0) {
+           } else if (selectedRow < 0) {
                 throw new CustomException(1114);
-            }
-            else {
+           } else {
                 // Mostramos diálogo de confirmación
                 resultado = JOptionPane.showConfirmDialog(null, projectDialog, "CREAR PROYECTO", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 

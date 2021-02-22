@@ -18,12 +18,12 @@ public class ProjectDialog extends JPanel {
     private JTextField txtDescription;
     private JComboBox<Employee> cbEmployee;
 
+    private EmployeeDB employeeList = new EmployeeDB();
+
     // Paleta de colores
     private final ColorsPalette DYE = new ColorsPalette();
 
-    // Simula bbdd
-    private static final EmployeeDB employeeList = new EmployeeDB();
-
+    // Constructor
     public ProjectDialog(String title, String description) throws IOException {
         this.initComponents(title, description);
     }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class EmployeeDB {
     // ArrayList que simula la base de datos de Empleados
-    private static final ArrayList<Employee> listaEmpleados = new ArrayList<Employee>();
+    private static final ArrayList<Employee> LISTA_EMPLEADOS = new ArrayList<Employee>();
 
     // Constructor vacío
     public EmployeeDB() {
@@ -23,7 +23,7 @@ public class EmployeeDB {
      * @param emp Objeto de la clase empleado
      */
     public void addEmployee(Employee emp) {
-        listaEmpleados.add(emp);
+        LISTA_EMPLEADOS.add(emp);
     }
 
     /**
@@ -31,7 +31,7 @@ public class EmployeeDB {
      * @param posicion posición del empleado dentro del ArrayList
      */
     public void removeEmployee(int posicion) {
-        listaEmpleados.remove(posicion);
+        LISTA_EMPLEADOS.remove(posicion);
     }
 
     /**
@@ -40,7 +40,7 @@ public class EmployeeDB {
      * @return devuelve un objeto de la clase Empleado
      */
     public Employee getEmployeeFromDB(int posicion) {
-        return listaEmpleados.get(posicion);
+        return LISTA_EMPLEADOS.get(posicion);
     }
 
     /**
@@ -48,7 +48,7 @@ public class EmployeeDB {
      * @return devuelve un entero con el tamaño del ArrayList de tipo Empleado
      */
     public int sizeEmployeeDB() {
-        return listaEmpleados.size();
+        return LISTA_EMPLEADOS.size();
     }
 
 
@@ -56,10 +56,8 @@ public class EmployeeDB {
      * Transforma ArrayList a array de Empleados
      */
     public Employee[] listEmployees() {
-        return listaEmpleados.toArray(new Employee[this.sizeEmployeeDB()]);
+        return LISTA_EMPLEADOS.toArray(new Employee[sizeEmployeeDB()]);
     }
-
-
 
 }
 
