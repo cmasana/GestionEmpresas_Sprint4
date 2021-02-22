@@ -10,45 +10,27 @@ import auxiliar.Error;
 import mainclasses.proposal.Proposal;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.text.ParseException;
 
 
 /**
  * Clase CrudProposal: Implementa todos los métodos necesarios para la gestión de propuestas
+ *
  * @author cmasana
  */
 public class CrudProposal {
-    // Log y errores
-    private static Log myLog;
-    private static Error myError;
-
-    static {
-        try {
-            myLog = new Log("./log.txt", true);
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-    }
-
-    static {
-        try {
-            myError = new Error("./error.txt", true);
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-    }
 
     // Array de tipo ProposalDB
     private final ProposalDB proposalList = new ProposalDB();
 
     /**
      * Permite crear propuestas
+     *
      * @param proposalTable tabla donde se visualizan las propuestas
-     * @param name nombre de la propuesta
-     * @param description descripción de la propuesta
-     * @param startDate fecha de la propuesta
-     * @param entity entidad de la propuesta
+     * @param name          nombre de la propuesta
+     * @param description   descripción de la propuesta
+     * @param startDate     fecha de la propuesta
+     * @param entity        entidad de la propuesta
      */
     public void createProposal(JTable proposalTable, String name, String description, String startDate, Entity entity) {
 
@@ -70,7 +52,7 @@ public class CrudProposal {
                     proposalList.addProposal(prop);
 
                     // Añadimos la entrada al log
-                    myLog.addLine("PROPOSAL CREATE " + prop.toString(), true);
+                    Log.capturarRegistro("PROPOSAL CREATE " + prop.toString());
 
                     // Actualizamos los datos en la tabla
                     showData(proposalTable);
@@ -80,22 +62,21 @@ public class CrudProposal {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+            Error.capturarError("PROPOSAL " + ce.getMessage());
 
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         } catch (ParseException pe) {
             String alerta = "Error: Fecha con formato desconocido";
             InputOutput.printAlert(alerta);
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "PROPOSAL " + alerta);
+            Error.capturarError("PROPOSAL " + alerta);
         }
     }
 
 
     /**
      * Permite eliminar propuestas
+     *
      * @param proposalTable tabla donde se visualizan las propuestas
      */
     public void deleteProposal(JTable proposalTable) {
@@ -114,7 +95,7 @@ public class CrudProposal {
                 // Si el resultado es igual a 0, eliminamos la propuesta
                 if (ok == 0) {
                     // Añadimos la entrada al log
-                    myLog.addLine("PROPOSAL DELETE " + proposalList.getProposalFromDB(row), true);
+                    Log.capturarRegistro("PROPOSAL DELETE " + proposalList.getProposalFromDB(row));
 
                     // Eliminamos propuesta
                     proposalList.removeProposal(row);
@@ -131,16 +112,16 @@ public class CrudProposal {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+            Error.capturarError("PROPOSAL " + ce.getMessage());
 
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
     }
 
     /**
      * Permite vaciar toda la lista de propuestas
+     *
      * @param proposalTable tabla donde se visualizan las propuestas creadas
+     * @deprecated
      */
     public void emptyAll(JTable proposalTable) {
         // Almacena un entero, si es 0 se eliminan todos los elementos
@@ -170,19 +151,20 @@ public class CrudProposal {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+            Error.capturarError("PROPOSAL " + ce.getMessage());
         }
     }
 
     /**
      * Permite modificar propuestas
+     *
      * @param proposalTable tabla donde se visualizan las propuestas
-     * @param name nombre de la propuesta
-     * @param description descripción de la propuesta
-     * @param startDate fecha de la propuesta
-     * @param cbEntity comboBox con la lista de entidades
+     * @param name          nombre de la propuesta
+     * @param description   descripción de la propuesta
+     * @param startDate     fecha de la propuesta
+     * @param cbEntity      comboBox con la lista de entidades
      */
-    public void editProposal(JTable proposalTable, String name, String description, String startDate , JComboBox<Entity> cbEntity) {
+    public void editProposal(JTable proposalTable, String name, String description, String startDate, JComboBox<Entity> cbEntity) {
 
         // Almacenamos el nº total de filas que hay en la tabla
         int totalRows = proposalTable.getRowCount();
@@ -210,20 +192,19 @@ public class CrudProposal {
                         if (InputOutput.wrongDate(startDate)) {
                             throw new CustomException(1117);
                         } else {
+                            proposalList.getProposalFromDB(selectedRow).setName(name);
+                            proposalList.getProposalFromDB(selectedRow).setDescription(description);
+                            proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
+                            proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
 
-                                proposalList.getProposalFromDB(selectedRow).setName(name);
-                                proposalList.getProposalFromDB(selectedRow).setDescription(description);
-                                proposalList.getProposalFromDB(selectedRow).setStartDate(InputOutput.stringToDate(startDate));
-                                proposalList.getProposalFromDB(selectedRow).setEntity(itemSelected);
+                            // Añadimos la entrada al log
+                            Log.capturarRegistro("PROPOSAL EDIT " + name + " "
+                                    + description + " "
+                                    + InputOutput.stringToDate(startDate) + "  "
+                                    + itemSelected.toString());
 
-                                // Añadimos la entrada al log
-                                myLog.addLine("PROPOSAL EDIT " + name + " "
-                                        + description + " "
-                                        + InputOutput.stringToDate(startDate) + "  "
-                                        + itemSelected.toString(), true);
-
-                                // Actualizamos datos de la tabla
-                                showData(proposalTable);
+                            // Actualizamos datos de la tabla
+                            showData(proposalTable);
                         }
                     }
                 }
@@ -232,16 +213,15 @@ public class CrudProposal {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "PROPOSAL " + ce.getMessage());
+            Error.capturarError("PROPOSAL " + ce.getMessage());
         } catch (ParseException e) {
             InputOutput.printAlert("Error: La fecha introducida no es válida");
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema de entrada/salida");
         }
     }
 
     /**
      * Muestra los datos actualizados en la tabla de propuestas
+     *
      * @param proposalTable tabla dónde se visualizan las propuestas creadas
      */
     public void showData(JTable proposalTable) {
@@ -250,7 +230,7 @@ public class CrudProposal {
         String[][] tabla = new String[proposalList.sizeProposalDB()][5];
 
         // Recorre la lista de Propuestas
-        for(int i = 0; i < proposalList.sizeProposalDB(); i++) {
+        for (int i = 0; i < proposalList.sizeProposalDB(); i++) {
 
             // Datos de cada Empleado
             tabla[i][0] = proposalList.getProposalFromDB(i).getName();
@@ -262,7 +242,7 @@ public class CrudProposal {
         // Añade los datos al modelo
         proposalTable.setModel(new CustomTableModel(
                 tabla,
-                new String [] {
+                new String[]{
                         "Título", "Descripción", "Fecha Inicio", "Entidad"
                 }
         ));

@@ -12,36 +12,31 @@ import java.util.Iterator;
  */
 public class Log {
 
-    private BufferedWriter buffered;
-    private final String path; // Ruta del archivo
-
-    public Log(String path, boolean append) throws IOException {
-        this.path = path;
-        this.open(append);
-    }
+    private static BufferedWriter buffered;
+    private static final String PATH = "./log.txt"; // Ruta del archivo
 
     // Abrimos buffer
-    private void open(boolean append) throws IOException {
+    private static void open() throws IOException {
         // Con TRUE no se sobreescribe el archivo, con FALSE si
-        this.buffered = new BufferedWriter(new FileWriter(this.path, append));
+        buffered = new BufferedWriter(new FileWriter(PATH, true));
     }
 
     // Añadimos línea al buffer
-    public void addLine(String line, boolean append) throws IOException {
+    public static void addLine(String line) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String formatoFecha = sdf.format(new Date());
 
-        this.open(append);
-        this.buffered.write("["+ formatoFecha +"] " + line + "\n");
+        open();
+        buffered.write("["+ formatoFecha +"] " + line + "\n");
 
-        this.close();
+        close();
     }
 
     // Obtenemos líneas del log
-    public void getLines() throws IOException {
+    public static void getLines() throws IOException {
         ArrayList<String> linesFile = new ArrayList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader(this.path));
+        BufferedReader br = new BufferedReader(new FileReader(PATH));
 
         String line;
 
@@ -59,8 +54,18 @@ public class Log {
     }
 
     // Cerramos buffer
-    private void close() throws IOException {
-        this.buffered.close();
+    private static void close() throws IOException {
+        buffered.close();
+    }
+
+    // Captura un registro y lo escribe dentro del archivo correspondiente
+    public static void capturarRegistro(String registro) {
+        try {
+            addLine(registro);
+
+        } catch (IOException e) {
+            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+        }
     }
 
 }

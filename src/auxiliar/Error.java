@@ -12,36 +12,32 @@ import java.util.Iterator;
  */
 public class Error {
 
-    private BufferedWriter buffered;
-    private final String path; // Ruta del archivo
+    private static BufferedWriter buffered;
+    private static final String PATH = "./error.txt"; // Ruta del archivo
 
-    public Error(String path, boolean append) throws IOException {
-        this.path = path;
-        this.open(append);
-    }
 
     // Abrimos buffer
-    private void open(boolean append) throws IOException {
+    private static void open() throws IOException {
         // Con TRUE no se sobreescribe el archivo, con FALSE si
-        this.buffered = new BufferedWriter(new FileWriter(this.path, append));
+        buffered = new BufferedWriter(new FileWriter(PATH, true));
     }
 
     // Añadimos línea al buffer
-    public void addLine(String line, boolean append) throws IOException {
+    public static void addLine(String line) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String formatoFecha = sdf.format(new Date());
 
-        this.open(append);
-        this.buffered.write("["+ formatoFecha +"] " + line + "\n");
+        open();
+        buffered.write("["+ formatoFecha +"] " + line + "\n");
 
-        this.close();
+        close();
     }
 
     // Obtenemos líneas del log
-    public void getLines() throws IOException {
+    public static void getLines() throws IOException {
         ArrayList<String> linesFile = new ArrayList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader(this.path));
+        BufferedReader br = new BufferedReader(new FileReader(PATH));
 
         String line;
 
@@ -59,19 +55,18 @@ public class Error {
     }
 
     // Cerramos buffer
-    private void close() throws IOException {
-        this.buffered.close();
+    private static void close() throws IOException {
+        buffered.close();
     }
 
     // Captura un error y lo escribe dentro del archivo correspondiente
-    public void capturarError(Error myError, String alerta) {
+    public static void capturarError(String alerta) {
         try {
-            myError.addLine(alerta, true); // TRUE para que no sobreescriba
+            addLine(alerta);
 
         } catch (IOException e) {
             InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
         }
-
     }
 
 }

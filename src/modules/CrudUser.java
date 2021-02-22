@@ -10,35 +10,11 @@ import mainclasses.user.Employee;
 import validations.*;
 
 import javax.swing.*;
-import java.io.IOException;
 
 /**
  * Clase CrudUser: Implementa todos los métodos para la gestión de empleados
  */
 public class CrudUser {
-    // Log y errores
-    private static Log myLog;
-    private static Error myError;
-
-    static {
-        try {
-            myLog = new Log("./log.txt", true);
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-    }
-
-    static {
-        try {
-            myError = new Error("./error.txt", true);
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-    }
-
-    // EmployeeDB
-    private final EmployeeDB employeeList = new EmployeeDB();
-
 
     /**
      * Permite crear un usuario y visualizarlo en tiempo real en su correspondiente tabla
@@ -68,10 +44,10 @@ public class CrudUser {
                     Employee emp = new Employee(name, dni, nss, employeeId);
 
                     // Lo añadimos al arraylist de tipo Empleado
-                    employeeList.addEmployee(emp);
+                    EmployeeDB.addEmployee(emp);
 
                     // Añadimos la entrada al log
-                    myLog.addLine("EMPLOYEE CREATE " + emp.toString(), true);
+                    Log.capturarRegistro("EMPLOYEE CREATE " + emp.toString());
 
                     // Actualizamos los datos en la tabla
                     showData(userTable);
@@ -81,10 +57,7 @@ public class CrudUser {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
-
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+            Error.capturarError("EMPLOYEE " + ce.getMessage());
         }
     }
 
@@ -109,10 +82,10 @@ public class CrudUser {
                 if (resultado == 0) {
 
                     // Añadimos la entrada al log
-                    myLog.addLine("EMPLOYEE DELETE " + employeeList.getEmployeeFromDB(row), true);
+                    Log.capturarRegistro("EMPLOYEE DELETE " + EmployeeDB.getEmployeeFromDB(row));
 
                     // Eliminamos empleado
-                    employeeList.removeEmployee(row);
+                    EmployeeDB.removeEmployee(row);
 
                     // Actualizamos datos de la tabla
                     showData(userTable);
@@ -126,10 +99,7 @@ public class CrudUser {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
-
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+            Error.capturarError("EMPLOYEE " + ce.getMessage());
         }
     }
 
@@ -153,7 +123,7 @@ public class CrudUser {
                 if (ok == 0) {
                     // Recorremos el arrayList y eliminamos 1 a 1 los registros
                     for (int i = (totalrows - 1); i >= 0; i--) {
-                        employeeList.removeEmployee(i);
+                        EmployeeDB.removeEmployee(i);
                     }
 
                     // Actualizamos los datos de la tabla
@@ -166,7 +136,7 @@ public class CrudUser {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
+            Error.capturarError("EMPLOYEE " + ce.getMessage());
         }
     }
 
@@ -207,14 +177,14 @@ public class CrudUser {
                             throw new CustomException(1113);
 
                         } else {
-                            employeeList.getEmployeeFromDB(selectedRow).setName(name);
-                            employeeList.getEmployeeFromDB(selectedRow).setDni(dni);
-                            employeeList.getEmployeeFromDB(selectedRow).setNss(nss);
-                            employeeList.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
+                            EmployeeDB.getEmployeeFromDB(selectedRow).setName(name);
+                            EmployeeDB.getEmployeeFromDB(selectedRow).setDni(dni);
+                            EmployeeDB.getEmployeeFromDB(selectedRow).setNss(nss);
+                            EmployeeDB.getEmployeeFromDB(selectedRow).setEmployeeId(employeeId);
 
                             // Añadimos la entrada al log
-                            myLog.addLine("EMPLOYEE EDIT " + name + " " + dni + " "
-                                                                + nss + "  " + employeeId, true);
+                            Log.capturarRegistro("EMPLOYEE EDIT " + name + " " + dni + " "
+                                                                + nss + "  " + employeeId);
 
                             // Actualizamos datos de la tabla
                             showData(userTable);
@@ -226,10 +196,7 @@ public class CrudUser {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "EMPLOYEE " + ce.getMessage());
-
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
+            Error.capturarError("EMPLOYEE " + ce.getMessage());
         }
     }
 
@@ -241,16 +208,16 @@ public class CrudUser {
     public void showData(JTable userTable) {
 
         // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
-        String[][] tablaUsuarios = new String[employeeList.sizeEmployeeDB()][4];
+        String[][] tablaUsuarios = new String[EmployeeDB.sizeEmployeeDB()][4];
 
         // Recorre la lista de Empleados
-        for (int i = 0; i < employeeList.sizeEmployeeDB(); i++) {
+        for (int i = 0; i < EmployeeDB.sizeEmployeeDB(); i++) {
 
             // Datos de cada Empleado
-            tablaUsuarios[i][0] = employeeList.getEmployeeFromDB(i).getName();
-            tablaUsuarios[i][1] = employeeList.getEmployeeFromDB(i).getDni();
-            tablaUsuarios[i][2] = employeeList.getEmployeeFromDB(i).getNss();
-            tablaUsuarios[i][3] = employeeList.getEmployeeFromDB(i).getEmployeeId();
+            tablaUsuarios[i][0] = EmployeeDB.getEmployeeFromDB(i).getName();
+            tablaUsuarios[i][1] = EmployeeDB.getEmployeeFromDB(i).getDni();
+            tablaUsuarios[i][2] = EmployeeDB.getEmployeeFromDB(i).getNss();
+            tablaUsuarios[i][3] = EmployeeDB.getEmployeeFromDB(i).getEmployeeId();
         }
 
         // Añade los datos al modelo

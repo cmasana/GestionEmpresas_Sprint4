@@ -19,31 +19,13 @@ import java.io.IOException;
  * Clase CrudProject: Implementa los métodos necesarios para realizar la gestión de proyectos
  */
 public class CrudProject {
-    // Log y errores
-    private static Log myLog;
-    private static Error myError;
-
-    static {
-        try {
-            myLog = new Log("./log.txt", true);
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-    }
-
-    static {
-        try {
-            myError = new Error("./error.txt", true);
-        } catch (IOException e) {
-            InputOutput.printAlert("Error: Problema en la operación de escritura del archivo");
-        }
-    }
 
     // Simula bbdd
     private final ProjectDB projectList = new ProjectDB();
 
     // Crud de propuestas
     private final CrudProposal crudProposal = new CrudProposal();
+
 
     /**
      * Permite crear Proyectos
@@ -53,7 +35,7 @@ public class CrudProject {
      * @param description String con la descripción de la propuesta
      * @throws IOException Excepción de entrada/salida
      */
-    public void createProject(JTable proposalTable, ProposalDB proposalList, String title, String description) throws IOException, CustomException {
+    public void createProject(JTable proposalTable, ProposalDB proposalList, String title, String description) throws CustomException, IOException {
         // Panel con formulario y comboBox
         ProjectDialog projectDialog = new ProjectDialog(title, description);
 
@@ -85,10 +67,10 @@ public class CrudProject {
                     projectList.addProject(project);
 
                     // Añadimos la entrada al log
-                    myLog.addLine("PROJECT CREATE " + project.toString(), true);
+                    Log.capturarRegistro("PROJECT CREATE " + project.toString());
 
                     // Añadimos la entrada, antes de eliminar la propuesta para obtener el valor de la fila seleccionada
-                    myLog.addLine("PROPOSAL DELETE " + proposalList.getProposalFromDB(selectedRow), true);
+                    Log.capturarRegistro("PROPOSAL DELETE " + proposalList.getProposalFromDB(selectedRow));
 
                     // Al crear proyecto, eliminamos la propuesta
                     proposalList.removeProposal(selectedRow);
@@ -101,7 +83,7 @@ public class CrudProject {
             InputOutput.printAlert(ce.getMessage());
 
             // Capturamos error para el registro
-            myError.capturarError(myError, "PROJECT " + ce.getMessage());
+            Error.capturarError("PROJECT " + ce.getMessage());
         }
     }
 
@@ -112,6 +94,7 @@ public class CrudProject {
     public void showData() throws IOException {
         int resultado;
 
+        // Implementa panel para visualizar proyectos
         ShowProjects showProjects = new ShowProjects();
 
         // Creamos array de tipo string e inicializamos con el tamaño del ArrayList
