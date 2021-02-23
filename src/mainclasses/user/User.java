@@ -62,6 +62,6 @@ public abstract class User {
 
     @Override
     public String toString() {
-        return name + " " + dni + " " + nss + " ";
+        return "Usuario: " + name + " ";
     }
 }

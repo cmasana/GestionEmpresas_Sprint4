@@ -62,18 +62,24 @@ public class InputOutput {
     /**
      * Permite averiguar si la fecha introducida es correcta o no
      * @param fecha Date que queremos comparar
-     * @return devuelve TRUE si la fecha es anterior o FALSE si es posterior
+     * @return devuelve TRUE si la fecha es anterior o FALSE si es posterior o igual
      */
     public static boolean wrongDate(String fecha) throws ParseException {
         Date dFecha;
-        Date today = new Date();
+        String sToday; // Fecha de hoy en string
 
+        Date today = new Date();
+        sToday = dateToString(today);
+
+        today = stringToDate(sToday);
         dFecha = stringToDate(fecha);
 
-        if (dFecha.before(today)) {
+        // Si es menor que 0 se trata de una fecha anterior a hoy
+        if (dFecha.compareTo(today) >= 0) {
+            return false;
+        } else {
             return true;
         }
-        return false;
     }
 
     /**

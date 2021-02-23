@@ -18,7 +18,7 @@ public class ProjectDialog extends JPanel {
     private JTextField txtDescription;
     private JComboBox<Employee> cbEmployee;
 
-    private EmployeeDB employeeList = new EmployeeDB();
+    private final EmployeeDB employeeList = new EmployeeDB();
 
     // Paleta de colores
     private final ColorsPalette DYE = new ColorsPalette();

@@ -11,6 +11,7 @@ import mainclasses.proposal.Proposal;
 
 import javax.swing.*;
 import java.text.ParseException;
+import java.util.Date;
 
 
 /**

@@ -12,7 +12,6 @@ import mainclasses.entity.Entity;
 import modules.CrudProject;
 import modules.CrudProposal;
 
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;

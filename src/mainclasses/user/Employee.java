@@ -48,6 +48,6 @@ public class Employee extends User {
      */
     public String toString() {
         return  super.toString() +
-                " " + this.employeeId;
+                " ID: " + this.employeeId;
     }
 }
