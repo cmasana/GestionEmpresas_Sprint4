@@ -1,13 +1,9 @@
 package auxiliar;
 
-import mainclasses.entity.Entity;
-
 import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * Grup Individual Sprint 3 2020 - Carlos Masana -
