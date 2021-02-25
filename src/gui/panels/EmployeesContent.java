@@ -146,6 +146,9 @@ public class EmployeesContent extends ContentWindow {
         });
         mButtonsEmployee.add(btnDelete);
 
+        /*
+        // DESACTIVADO A PETICIÓN DEL PROFESOR
+
         // Crea un espacio en blanco de separación
         mButtonsEmployee.add(Box.createRigidArea(new Dimension(0, 5)));
 
@@ -160,6 +163,8 @@ public class EmployeesContent extends ContentWindow {
             }
         });
         mButtonsEmployee.add(btnEmpty);
+
+        */
 
         mButtonsEmployee.setVisible(true);
 
